@@ -96,12 +96,12 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 overflow-x-hidden px-3 pt-3 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 sm:px-4 sm:pt-4",
+        "fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 sm:px-4 sm:pt-4",
       )}
     >
       <div
         className={cn(
-          "relative mx-auto flex h-14 w-full min-w-0 max-w-7xl items-center justify-between gap-2 overflow-hidden rounded-full px-3 sm:gap-4 sm:px-5 lg:h-16 lg:px-6",
+          "relative mx-auto flex h-14 w-full min-w-0 max-w-7xl items-center justify-between gap-2 rounded-full px-3 sm:gap-4 sm:px-5 lg:h-16 lg:px-6",
           "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300",
           useGlass
             ? "border border-white/10 bg-brand-ink/75 shadow-lg shadow-black/15 backdrop-blur-md"
