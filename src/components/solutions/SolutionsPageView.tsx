@@ -107,11 +107,11 @@ export function SolutionsPageView() {
         aria-labelledby="about-solutions-heading"
       >
         <div
-          className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-brand-green/10 blur-3xl"
+          className="pointer-events-none absolute top-10 right-0 h-64 w-64 translate-x-1/3 rounded-full bg-brand-green/10 blur-3xl"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-brand-ink/5 blur-3xl"
+          className="pointer-events-none absolute bottom-0 left-0 h-56 w-56 -translate-x-1/3 rounded-full bg-brand-ink/5 blur-3xl"
           aria-hidden
         />
 

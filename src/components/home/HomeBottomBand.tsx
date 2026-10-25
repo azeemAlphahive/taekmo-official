@@ -29,7 +29,7 @@ export function HomeBottomBand() {
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-20 top-1/4 h-80 w-80 rounded-full bg-brand-green/15 blur-3xl"
+        className="pointer-events-none absolute top-1/4 right-0 h-64 w-64 translate-x-1/3 rounded-full bg-brand-green/15 blur-3xl"
         aria-hidden
       />
 

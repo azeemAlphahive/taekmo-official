@@ -96,12 +96,12 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 sm:px-4 sm:pt-4",
+        "fixed inset-x-0 top-0 z-50 overflow-x-hidden px-3 pt-3 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 sm:px-4 sm:pt-4",
       )}
     >
       <div
         className={cn(
-          "relative mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 rounded-full px-4 sm:px-5 lg:h-16 lg:px-6",
+          "relative mx-auto flex h-14 w-full min-w-0 max-w-7xl items-center justify-between gap-2 overflow-hidden rounded-full px-3 sm:gap-4 sm:px-5 lg:h-16 lg:px-6",
           "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300",
           useGlass
             ? "border border-white/10 bg-brand-ink/75 shadow-lg shadow-black/15 backdrop-blur-md"
@@ -110,10 +110,10 @@ export function Header() {
       >
         <Link
           href="/"
-          className="relative z-10 shrink-0 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
+          className="relative z-10 min-w-0 shrink rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
           aria-label="TAEKMO home"
         >
-          <Logo variant="light" />
+          <Logo variant="light" className="[&_img]:h-9 sm:[&_img]:h-12" />
         </Link>
 
         <nav
@@ -130,18 +130,18 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="relative z-10 flex items-center gap-2 sm:gap-2.5">
+        <div className="relative z-10 flex shrink-0 items-center gap-1.5 sm:gap-2.5">
           <AppDownloadButton className="hidden md:block" compact />
           <Button
             href="/contact"
             variant="primary"
-            className="hidden !rounded-full border-0 bg-brand-green px-5 py-2 text-sm font-semibold text-white hover:bg-brand-green-dark lg:inline-flex"
+            className="!rounded-full border-0 bg-brand-green px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-green-dark sm:px-4 sm:py-2 sm:text-sm lg:px-5"
           >
             Contact Us
           </Button>
           <button
             type="button"
-            className="inline-flex rounded-md p-2 text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green lg:hidden"
+            className="inline-flex shrink-0 rounded-md p-2 text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -181,7 +181,7 @@ export function Header() {
                 <Button
                   href="/contact"
                   variant="primary"
-                  className="w-full !rounded-full"
+                  className="w-full !rounded-full lg:hidden"
                   onClick={() => setOpen(false)}
                 >
                   Contact Us

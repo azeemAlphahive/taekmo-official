@@ -48,20 +48,20 @@ export function VerificationCard({
   return (
     <aside
       className={cn(
-        "w-full rounded-xl border border-brand-green/50 bg-[#12161c]/80 p-5 shadow-2xl backdrop-blur-md sm:p-6",
+        "box-border w-full max-w-full overflow-hidden rounded-xl border border-brand-green/50 bg-[#12161c]/80 p-5 shadow-2xl backdrop-blur-md sm:p-6",
         className,
       )}
       aria-labelledby={headingId}
     >
-      <div className="mb-4 flex items-start gap-3">
-        <div className="flex flex-col items-center gap-1">
+      <div className="mb-4 flex min-w-0 items-start gap-2.5 sm:gap-3">
+        <div className="flex shrink-0 flex-col items-center gap-1">
           <span
             className={cn(
-              "flex h-10 w-10 items-center justify-center bg-brand-green/20 text-brand-green",
+              "flex h-9 w-9 items-center justify-center bg-brand-green/20 text-brand-green sm:h-10 sm:w-10",
               showBarcodeGuide ? "rounded-lg" : "rounded-full",
             )}
           >
-            <QrCode className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+            <QrCode className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} aria-hidden />
           </span>
           {showBarcodeGuide && (
             <span className="text-[9px] font-semibold tracking-wide text-brand-mint/90 uppercase">
@@ -92,7 +92,7 @@ export function VerificationCard({
         <label htmlFor={inputId} className="sr-only">
           Product serial number
         </label>
-        <div className="flex overflow-hidden rounded-lg border border-white/20 bg-white/5 focus-within:border-brand-green focus-within:ring-1 focus-within:ring-brand-green">
+        <div className="flex min-w-0 overflow-hidden rounded-lg border border-white/20 bg-white/5 focus-within:border-brand-green focus-within:ring-1 focus-within:ring-brand-green">
           <input
             id={inputId}
             name="serial"
@@ -109,7 +109,7 @@ export function VerificationCard({
             }}
             aria-invalid={status === "error"}
             aria-describedby={message ? feedbackId : undefined}
-            className="min-w-0 flex-1 bg-transparent px-3.5 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none"
+            className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none sm:px-3.5 sm:py-3"
           />
           <button
             type="submit"

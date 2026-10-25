@@ -107,11 +107,11 @@ export function Stats() {
       className="bg-[#f4f7f5] pt-2 pb-8 sm:pb-10"
       aria-label="Company highlights"
     >
-      <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-y-0 px-4 min-[400px]:grid-cols-2 sm:px-6 md:grid-cols-4 lg:px-8">
+      <ul className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-y-0 px-4 sm:grid-cols-2 sm:px-6 md:grid-cols-4 lg:px-8">
         {items.map((item, index) => (
           <li
             key={item.label}
-            className="relative flex items-center gap-3.5 px-3 py-4 sm:justify-center sm:gap-4 sm:px-5 sm:py-6"
+            className="relative flex min-w-0 max-w-full items-center gap-3 overflow-hidden px-2 py-4 sm:justify-center sm:gap-4 sm:px-5 sm:py-6"
           >
             {index > 0 && (
               <span
@@ -121,18 +121,18 @@ export function Stats() {
             )}
             {index % 2 === 1 && (
               <span
-                className="absolute top-1/2 left-0 hidden h-12 w-px -translate-y-1/2 bg-black/10 min-[400px]:block md:hidden"
+                className="absolute top-1/2 left-0 hidden h-12 w-px -translate-y-1/2 bg-black/10 sm:block md:hidden"
                 aria-hidden
               />
             )}
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#099c2d]/10 text-[#099c2d] sm:h-14 sm:w-14">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#099c2d]/10 text-[#099c2d] sm:h-14 sm:w-14">
               {item.icon}
             </span>
-            <div className="min-w-0">
-              <p className="text-2xl font-bold tracking-tight text-[#04100a] sm:text-3xl lg:text-[2.1rem]">
+            <div className="min-w-0 flex-1 overflow-hidden">
+              <p className="truncate text-2xl font-bold tracking-tight text-[#04100a] sm:text-3xl lg:text-[2.1rem]">
                 <CountUpValue value={item.value} active={inView} />
               </p>
-              <p className="mt-1 text-xs leading-snug text-[#5c6670] sm:text-sm">
+              <p className="mt-1 text-xs leading-snug break-words text-[#5c6670] sm:text-sm">
                 {item.label}
               </p>
             </div>
