@@ -6,7 +6,7 @@ import { VerifySection } from "@/components/home/VerifySection";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Full TAEKMO / Talesun BIPRO & HYPRO solar panel catalogue — BloombergNEF Tier 1.",
+    "Full TAEKMO / Talesun BC, BIPRO & HYPRO solar panel catalogue — BloombergNEF Tier 1.",
 };
 
 export default function ProductsPage() {
@@ -15,7 +15,7 @@ export default function ProductsPage() {
       <PageHero
         eyebrow="TAEKMO CATALOGUE"
         title="Our Product Range"
-        description="Complete Talesun BIPRO (TOPCon) and HYPRO (HJT) panel lineup — every published watt class."
+        description="Talesun BC Back Contact bestsellers, plus BIPRO (TOPCon) and HYPRO (HJT) — every published watt class."
         imageSrc="/images/solutions/commercial.jpg"
       />
       <ProductsCatalogue />

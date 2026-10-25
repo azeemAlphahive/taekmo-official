@@ -1,26 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { CategoryFilters } from "@/components/products/CategoryFilters";
 import { ProductCard } from "@/components/products/ProductCard";
 import { SectionReveal } from "@/components/ui/SectionReveal";
-import { products } from "@/data/products";
-import type { ProductCategory } from "@/types";
+import { homeFeaturedProducts } from "@/data/products";
 
 export function ProductRange() {
-  const [category, setCategory] = useState<ProductCategory>("all");
-
-  const filtered = useMemo(() => {
-    const list =
-      category === "all"
-        ? products
-        : products.filter((p) => p.category === category);
-    // Home: first row only (4 cards on desktop grid)
-    return list.slice(0, 4);
-  }, [category]);
-
   return (
     <section
       id="products"
@@ -38,7 +24,8 @@ export function ProductRange() {
                 Our Product Range
               </h2>
               <p className="mt-2 text-sm text-brand-muted sm:text-[15px]">
-                Full Talesun BIPRO & HYPRO lineup — BloombergNEF Tier 1.
+                Talesun BC Back Contact bestsellers — high-demand modules for
+                every project scale.
               </p>
             </div>
             <Link
@@ -49,31 +36,24 @@ export function ProductRange() {
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>
-
-          <div className="mt-6">
-            <CategoryFilters active={category} onChange={setCategory} />
-          </div>
         </SectionReveal>
 
         <SectionReveal delay={0.08} className="mt-8">
-          {filtered.length === 0 ? (
-            <p className="py-12 text-center text-sm text-brand-muted">
-              No products in this category yet.
-            </p>
-          ) : (
-            <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4 lg:gap-6">
-              {filtered.map((product, index) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  index={index}
-                />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+            {homeFeaturedProducts.map((product, index) => (
+              <ProductCard key={product.id} product={product} index={index} />
+            ))}
+          </div>
           <p className="mt-4 text-[11px] text-brand-muted">
-            Catalogue mirrors Talesun official BIPRO / HYPRO datasheet ranges.
-            Confirm final values with your TAEKMO quote.
+            Showing BC series highlights. Full BIPRO, HYPRO and every watt class
+            are on{" "}
+            <Link
+              href="/products#all-products"
+              className="font-semibold text-brand-green hover:text-brand-green-dark"
+            >
+              All Products
+            </Link>
+            .
           </p>
         </SectionReveal>
       </div>

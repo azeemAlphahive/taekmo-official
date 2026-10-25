@@ -12,12 +12,14 @@ const PANEL_IMAGE = "/images/products/taekmo-solar-panel-white.jpg";
 
 /**
  * Talesun / TAEKMO panel catalogue sourced from Talesun official datasheets
- * (BIPRO TOPCon + HYPRO HJT, BloombergNEF Tier 1).
+ * (BC Back Contact + BIPRO TOPCon + HYPRO HJT, BloombergNEF Tier 1).
  * Watt steps follow published series ranges (typically 5 W bins).
  */
+type PanelFamily = "BC" | "BIPRO" | "HYPRO";
+
 type PanelSeries = {
   code: string;
-  family: "BIPRO" | "HYPRO";
+  family: PanelFamily;
   technology: string;
   cells: string;
   cellCount: string;
@@ -41,6 +43,76 @@ type PanelSeries = {
 };
 
 const panelSeries: PanelSeries[] = [
+  // —— BC (Back Contact) — high-demand / best-selling platform ——
+  {
+    code: "TM9C54M",
+    family: "BC",
+    technology: "N-type Back Contact (BC) monofacial · high-efficiency cells",
+    cells: "108 half-cut (BC 182)",
+    cellCount: "108",
+    dimensions: "1762 × 1134 × 30 mm",
+    weight: "21.5 kg",
+    glass: "3.2 mm tempered front glass",
+    frames: "Full black · Silver",
+    warrantyProduct: "25 years",
+    warrantyPerformance: "30 years",
+    watts: [475, 480, 485, 490, 495],
+    efficiencyMin: 23.5,
+    efficiencyMax: 24.5,
+    base: { vmpp: 34.8, impp: 13.65, voc: 41.6, isc: 14.35 },
+  },
+  {
+    code: "TN9C54M",
+    family: "BC",
+    technology: "N-type Back Contact (BC) bifacial dual glass · high-efficiency cells",
+    cells: "108 half-cut (BC 182)",
+    cellCount: "108",
+    dimensions: "1762 × 1134 × 30 mm",
+    weight: "24.0 kg",
+    glass: "2.0 mm dual glass",
+    frames: "Full black · Transparent · Silver",
+    warrantyProduct: "25 years",
+    warrantyPerformance: "30 years",
+    watts: [475, 480, 485, 490, 495],
+    efficiencyMin: 23.4,
+    efficiencyMax: 24.4,
+    base: { vmpp: 34.6, impp: 13.73, voc: 41.4, isc: 14.42 },
+  },
+  {
+    code: "TM9C72M",
+    family: "BC",
+    technology: "N-type Back Contact (BC) monofacial · high-efficiency cells",
+    cells: "144 half-cut (BC 182)",
+    cellCount: "144",
+    dimensions: "2278 × 1134 × 30 mm",
+    weight: "27.5 kg",
+    glass: "3.2 mm tempered front glass",
+    frames: "Anodised aluminium · Black · Silver",
+    warrantyProduct: "15 years",
+    warrantyPerformance: "30 years",
+    watts: [645, 650, 655, 660, 665],
+    efficiencyMin: 23.6,
+    efficiencyMax: 24.5,
+    base: { vmpp: 44.9, impp: 14.37, voc: 53.6, isc: 15.1 },
+  },
+  {
+    code: "TN9C72M",
+    family: "BC",
+    technology: "N-type Back Contact (BC) bifacial dual glass · high-efficiency cells",
+    cells: "144 half-cut (BC 182)",
+    cellCount: "144",
+    dimensions: "2278 × 1134 × 30 mm",
+    weight: "31.0 kg",
+    glass: "2.0 mm dual glass",
+    frames: "Anodised aluminium · Black · Silver",
+    warrantyProduct: "15 years",
+    warrantyPerformance: "30 years",
+    watts: [645, 650, 655, 660, 665],
+    efficiencyMin: 23.5,
+    efficiencyMax: 24.4,
+    base: { vmpp: 44.7, impp: 14.43, voc: 53.4, isc: 15.18 },
+  },
+  // —— BIPRO (TOPCon) ——
   {
     code: "TM3G48M",
     family: "BIPRO",
@@ -293,8 +365,14 @@ function expandModels(): PanelModel[] {
       });
     }
   }
-  // Highest watt first within each family, then by watt desc overall
-  return models.sort((a, b) => b.watt - a.watt || a.series.code.localeCompare(b.series.code));
+  // BC first (best-selling), then higher watt classes
+  const familyRank: Record<PanelFamily, number> = { BC: 0, HYPRO: 1, BIPRO: 2 };
+  return models.sort(
+    (a, b) =>
+      familyRank[a.series.family] - familyRank[b.series.family] ||
+      b.watt - a.watt ||
+      a.series.code.localeCompare(b.series.code),
+  );
 }
 
 const allModels = expandModels();
@@ -318,10 +396,19 @@ function buildProduct(model: PanelModel): Product {
   };
 }
 
+function techLabel(series: PanelSeries): string {
+  if (series.family === "HYPRO") return "HJT Bifacial";
+  if (series.family === "BC") {
+    return series.technology.toLowerCase().includes("bifacial")
+      ? "BC Bifacial"
+      : "Back Contact (BC)";
+  }
+  return "TOPCon Bifacial";
+}
+
 function buildDetail(product: Product, model: PanelModel): ProductDetail {
   const { series, watt, efficiency, vmpp, impp, voc, isc } = model;
-  const techShort =
-    series.family === "HYPRO" ? "HJT Bifacial" : "TOPCon Bifacial";
+  const techShort = techLabel(series);
 
   return {
     ...product,
@@ -385,7 +472,7 @@ function buildDetail(product: Product, model: PanelModel): ProductDetail {
       heading: `${product.name}-${watt}W — Talesun Tier 1 ${series.family}`,
       paragraphs: [
         `TAEKMO supplies this module on the Talesun ${series.family} ${series.code} platform. Talesun is listed on the BloombergNEF (BNEF) Tier 1 PV module manufacturer list — a bankability reference for project finance.`,
-        `${series.technology}. ${series.cells} configuration with dual-glass bifacial construction for higher energy yield. Frame options: ${series.frames}.`,
+        `${series.technology}. ${series.cells} configuration. Frame options: ${series.frames}.`,
         `Series power range on this platform: ${series.watts[0]}–${series.watts[series.watts.length - 1]} W. Confirm final electrical values from the official Talesun datasheet with your TAEKMO quote.`,
       ],
       image: "/images/solutions/commercial.jpg",
@@ -446,7 +533,10 @@ function buildDetail(product: Product, model: PanelModel): ProductDetail {
       },
       {
         label: "Source",
-        value: "Talesun official BIPRO / HYPRO datasheet ranges",
+        value:
+          series.family === "BC"
+            ? "Talesun official BC module datasheet / warranty ranges"
+            : "Talesun official BIPRO / HYPRO datasheet ranges",
       },
     ],
     warranty: [
@@ -461,7 +551,9 @@ function buildDetail(product: Product, model: PanelModel): ProductDetail {
         title: "Linear Performance Warranty",
         duration: series.warrantyPerformance,
         description:
-          "Linear power output warranty on the Talesun platform (confirm certificate with order).",
+          series.family === "BC"
+            ? "BC platform: ≤1% first-year, then ≤0.35%/yr — ≥88.85% by year 30 (confirm certificate with order)."
+            : "Linear power output warranty on the Talesun platform (confirm certificate with order).",
       },
     ],
     documents: [
@@ -491,12 +583,27 @@ function buildDetail(product: Product, model: PanelModel): ProductDetail {
   };
 }
 
-/** Full TAEKMO / Talesun solar panel catalogue (BIPRO + HYPRO). */
+/** Full TAEKMO / Talesun solar panel catalogue (BC + BIPRO + HYPRO). */
 export const products: Product[] = allModels.map(buildProduct);
 
 export const productDetails: ProductDetail[] = allModels.map((model, i) =>
   buildDetail(products[i], model),
 );
+
+/** Home page: one card per BC bestseller series (max watt in range). */
+export const HOME_BC_SERIES = [
+  "TM9C54M",
+  "TN9C54M",
+  "TM9C72M",
+  "TN9C72M",
+] as const;
+
+export const homeFeaturedProducts: Product[] = HOME_BC_SERIES.map((code) => {
+  const matches = products.filter((p) =>
+    p.id.startsWith(`${code.toLowerCase()}-`),
+  );
+  return matches[0]; // catalogue sorted watt-desc within BC family
+}).filter(Boolean);
 
 export function getProductBySlug(slug: string): ProductDetail | undefined {
   return productDetails.find((p) => p.slug === slug);

@@ -45,12 +45,22 @@ export function buildVerifyResult(barcode: string): VerifyResult {
   const trimmed = barcode.trim();
   const wattMatch = trimmed.match(/(\d{3})\s*w?/i);
   const watt = wattMatch ? wattMatch[1] : "650";
-  const seriesMatch = trimmed.match(/(tm|th)\w+/i);
+  const seriesMatch = trimmed.match(/(tm|tn|th)\w+/i);
   const series = seriesMatch
     ? seriesMatch[0].toUpperCase()
-    : "TM3G66M";
-  const family = series.startsWith("TH") ? "HYPRO" : "BIPRO";
+    : "TM9C72M";
+  const family = series.startsWith("TH")
+    ? "HYPRO"
+    : series.includes("9C")
+      ? "BC"
+      : "BIPRO";
   const slug = `taekmo-${family.toLowerCase()}-${series.toLowerCase()}-${watt}`;
+  const cellType =
+    family === "BC"
+      ? "N-Type Back Contact (BC)"
+      : family === "HYPRO"
+        ? "N-Type HJT Bifacial"
+        : "N-Type TOPCon Bifacial";
 
   return {
     status: "authentic",
@@ -58,6 +68,7 @@ export function buildVerifyResult(barcode: string): VerifyResult {
     productName: `TAEKMO ${family} ${series}`,
     model: `${series}-${watt}`,
     power: `${watt}W`,
+    cellType,
     productHref: `/products/${slug}`,
     imageAlt: `TAEKMO ${family} ${series} solar panel module`,
     barcode: trimmed,
