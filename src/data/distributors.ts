@@ -37,7 +37,7 @@ export const pakistanDistributors = [
     role: "Authorized distributor",
     logo: "/images/distributors/blaze-solar-logo.png",
     logoAlt: "Blaze Solar Energy logo",
-    logoOnDark: false,
+    logoOnDark: true,
     highlight: "Bulk supply · DHA Phase VII & Phase II, Karachi",
     description:
       "Karachi-based solar supplier focused on wholesale panel stock, B2B partnerships, and nationwide delivery for shops, traders, and project buyers.",

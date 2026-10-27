@@ -88,10 +88,10 @@ export function Distributors({ className }: { className?: string }) {
                   <Image
                     src={distributor.logo}
                     alt={distributor.logoAlt}
-                    width={160}
-                    height={56}
-                    unoptimized={distributor.logo.endsWith(".svg")}
-                    className="h-10 w-auto max-w-[150px] object-contain object-left sm:h-11"
+                    width={200}
+                    height={72}
+                    unoptimized
+                    className="h-11 w-auto max-w-[170px] object-contain object-left sm:h-12"
                   />
                 </div>
 
