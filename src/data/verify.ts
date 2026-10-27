@@ -1,18 +1,24 @@
+import type { Panel } from "@prisma/client";
+
+export type VerifyStatus = "authentic" | "not_found";
+
 export interface VerifyResult {
   status: "authentic";
   productName: string;
   model: string;
   barcode: string;
   serialNumber: string;
+  productType: string;
+  palletNo: string;
   category: string;
   categoryLabel: string;
-  manufactureDate: string;
-  shipDate: string;
-  warrantyStatus: string;
-  origin: string;
   power: string;
-  efficiency: string;
-  cellType: string;
+  pmax: string;
+  ff: string;
+  voc: string;
+  isc: string;
+  vpm: string;
+  ipm: string;
   image: string;
   imageAlt: string;
   productHref: string;
@@ -21,58 +27,60 @@ export interface VerifyResult {
 
 const PANEL_IMAGE = "/images/products/taekmo-solar-panel-white.jpg";
 
-const defaultPanel: Omit<
-  VerifyResult,
-  "barcode" | "serialNumber" | "status" | "note"
-> = {
-  productName: "TAEKMO BIPRO TM3G66M",
-  model: "TM3G66M-650",
-  category: "solar-panels",
-  categoryLabel: "Solar Panel",
-  manufactureDate: "2024-08-14",
-  shipDate: "2024-09-02",
-  warrantyStatus: "Active (illustrative)",
-  origin: "TAEKMO authorised channel · Talesun / TAEKMO",
-  power: "650W",
-  efficiency: "24.06%",
-  cellType: "N-Type TOPCon Bifacial",
-  image: PANEL_IMAGE,
-  imageAlt: "TAEKMO BIPRO TM3G66M solar panel module",
-  productHref: "/products/taekmo-bipro-tm3g66m-650",
-};
+function formatNum(value: number | null | undefined, digits = 2): string {
+  if (value == null || Number.isNaN(value)) return "—";
+  return value.toFixed(digits);
+}
 
-export function buildVerifyResult(barcode: string): VerifyResult {
-  const trimmed = barcode.trim();
-  const wattMatch = trimmed.match(/(\d{3})\s*w?/i);
-  const watt = wattMatch ? wattMatch[1] : "650";
-  const seriesMatch = trimmed.match(/(tm|tn|th)\w+/i);
-  const series = seriesMatch
-    ? seriesMatch[0].toUpperCase()
-    : "TM9C72M";
-  const family = series.startsWith("TH")
-    ? "HYPRO"
-    : series.includes("9C")
-      ? "BC"
-      : "BIPRO";
-  const slug = `taekmo-${family.toLowerCase()}-${series.toLowerCase()}-${watt}`;
-  const cellType =
-    family === "BC"
-      ? "N-Type Back Contact (BC)"
-      : family === "HYPRO"
-        ? "N-Type HJT Bifacial"
-        : "N-Type TOPCon Bifacial";
+function panelModel(panel: Panel): string {
+  if (/^TKM/i.test(panel.serialNo)) return panel.serialNo;
+  if (panel.productType && /^TKM/i.test(panel.productType)) return panel.productType;
+  return panel.serialNo;
+}
+
+export function panelToVerifyResult(panel: Panel): VerifyResult {
+  const model = panelModel(panel);
+  const slug = `taekmo-${model.toLowerCase()}`;
+  const power =
+    panel.labelWatt != null
+      ? `${panel.labelWatt}W`
+      : `${formatNum(panel.pmax, 0)}W`;
 
   return {
     status: "authentic",
-    ...defaultPanel,
-    productName: `TAEKMO ${family} ${series}`,
-    model: `${series}-${watt}`,
-    power: `${watt}W`,
-    cellType,
+    productName: `TAEKMO ${model}`,
+    model,
+    barcode: panel.productNo,
+    serialNumber: panel.productNo,
+    productType: panel.productType ?? "—",
+    palletNo: panel.palletNo ?? "—",
+    category: "solar-panels",
+    categoryLabel: "Solar Panel",
+    power,
+    pmax: panel.pmax != null ? `${formatNum(panel.pmax)} W` : "—",
+    ff: formatNum(panel.ff, 2),
+    voc: panel.voc != null ? `${formatNum(panel.voc)} V` : "—",
+    isc: panel.isc != null ? `${formatNum(panel.isc)} A` : "—",
+    vpm: panel.vpm != null ? `${formatNum(panel.vpm)} V` : "—",
+    ipm: panel.ipm != null ? `${formatNum(panel.ipm)} A` : "—",
+    image: PANEL_IMAGE,
+    imageAlt: `TAEKMO ${model} solar panel module`,
     productHref: `/products/${slug}`,
-    imageAlt: `TAEKMO ${family} ${series} solar panel module`,
-    barcode: trimmed,
-    serialNumber: `TM-${trimmed.slice(-4).toUpperCase().padEnd(4, "0")}-${trimmed.replace(/\W/g, "").slice(0, 8).toUpperCase() || "DEMO0001"}`,
-    note: "Dummy demo result for UI testing — not a real authenticity confirmation.",
+    note: "This module is registered in the TAEKMO authenticity database.",
   };
+}
+
+/** Server-side lookup used by the result page. */
+export async function lookupPanelByProductNo(
+  code: string,
+): Promise<VerifyResult | null> {
+  const { prisma } = await import("@/lib/db");
+  const normalized = code.trim().toUpperCase().replace(/\s+/g, "");
+  if (!normalized || normalized.length < 6) return null;
+
+  const panel = await prisma.panel.findUnique({
+    where: { productNo: normalized },
+  });
+
+  return panel ? panelToVerifyResult(panel) : null;
 }

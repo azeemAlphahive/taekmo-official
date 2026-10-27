@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 58" role="img" aria-label="Blaze Solar Energy">
+  <title>Blaze Solar Energy</title>
+  <!-- Flame mark inspired by Blaze Group of Companies identity -->
+  <g transform="translate(6,5)">
+    <path fill="#8B0A14" d="M6 42c0-10 6-16 14-24 2 6 4 10 4 16 0 6-2 10-6 14-4-2-8-4-12-6z"/>
+    <path fill="#E31C23" d="M20 4c10 8 18 16 18 28 0 8-4 14-12 18 8-6 12-12 12-20C38 18 30 10 20 4z"/>
+    <path fill="#C01018" d="M18 12c7 6 12 12 12 20 0 5-2 9-7 13 5-4 8-8 8-14 0-7-4-12-13-19z"/>
+    <path fill="#F2484E" d="M28 8c5 5 9 10 9 17 0 4-1.5 7.5-5 10.5 3.5-3.5 5.5-7 5.5-11.5C37.5 17 33.5 12 28 8z"/>
+  </g>
+  <text x="60" y="28" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#101217">blaze</text>
+  <text x="60" y="46" font-family="Arial, Helvetica, sans-serif" font-size="9.5" font-weight="700" letter-spacing="2.5" fill="#E31C23">SOLAR ENERGY</text>
+</svg>

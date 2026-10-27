@@ -5,9 +5,11 @@ export const siteConfig = {
   tagline: "Better Energy. A Brighter Future.",
   description:
     "TAEKMO delivers high-performance solar panels, inverters, batteries, and complete solar solutions for homes and businesses.",
-  url: "https://taekmo.com",
-  email: "hello@taekmo.com",
+  url: "https://www.taekmosolar.com",
+  email: "sales@taekmosolar.com",
   phone: "+92 300 0000000",
+  address:
+    "No.1 Talesun Road, Shajiabang, Changshu, Suzhou, Jiangsu Province, China 215542",
 } as const;
 
 export const mainNav: NavItem[] = [
@@ -110,7 +112,8 @@ export const footerColumns: FooterColumn[] = [
     title: "Company",
     links: [
       { label: "About TAEKMO", href: "/about" },
-      { label: "Partners", href: "/about#partners" },
+      { label: "Partners", href: "/#partners" },
+      { label: "Distributors", href: "/#distributors" },
       { label: "Projects", href: "/projects" },
       { label: "Support", href: "/support" },
     ],
@@ -129,8 +132,18 @@ export const heroContent = {
 
 export const verificationContent = {
   title: "Check authenticity",
-  instruction: "Enter the serial / barcode from your module label.",
-  placeholder: "Enter serial number",
-  demoNote:
-    "Demo mode: verification is not connected to a live database yet.",
+  instruction: "Enter or scan the Product No. from your module label.",
+  placeholder: "e.g. 2604D72F2882009720",
+} as const;
+
+/** Pakistan country leadership — shown on Contact. Update details as confirmed. */
+export const pakistanCountryHead = {
+  name: "Sophia",
+  title: "Country Head — Pakistan",
+  region: "Pakistan",
+  message:
+    "TAEKMO is committed to bringing bankable, high-efficiency N-type modules to Pakistan’s residential, C&I, and utility projects. Whether you are specifying a rooftop or a large-scale plant, our local team is here to support product selection, supply, and long-term partnership.",
+  email: "sophia@taekmosolar.com",
+  phone: "+92 300 0000000",
+  whatsapp: "+923000000000",
 } as const;

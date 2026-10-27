@@ -24,8 +24,8 @@ export function ProductRange() {
                 Our Product Range
               </h2>
               <p className="mt-2 text-sm text-brand-muted sm:text-[15px]">
-                Talesun BC Back Contact bestsellers — high-demand modules for
-                every project scale.
+                High-reliability N-type modules — from lower to higher watt
+                class.
               </p>
             </div>
             <Link
@@ -44,17 +44,6 @@ export function ProductRange() {
               <ProductCard key={product.id} product={product} index={index} />
             ))}
           </div>
-          <p className="mt-4 text-[11px] text-brand-muted">
-            Showing BC series highlights. Full BIPRO, HYPRO and every watt class
-            are on{" "}
-            <Link
-              href="/products#all-products"
-              className="font-semibold text-brand-green hover:text-brand-green-dark"
-            >
-              All Products
-            </Link>
-            .
-          </p>
         </SectionReveal>
       </div>
     </section>

@@ -94,7 +94,7 @@ export function HomeBottomBand() {
                 className="w-full max-w-md border-brand-green/40 bg-[#0c1210]/75 shadow-[0_28px_60px_-20px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:ml-auto"
               />
               <p className="mt-3 text-center text-[11px] text-white/45 lg:text-right">
-                Demo mode until the live verification API is connected.
+                Enter the Product No. from your module label to verify.
               </p>
             </div>
           </SectionReveal>

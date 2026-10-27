@@ -1,9 +1,11 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useId, useLayoutEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { ArrowRight, QrCode } from "lucide-react";
 import { verificationContent } from "@/data/content";
+import { BarcodeScanner } from "@/components/verify/BarcodeScanner";
 import { cn } from "@/lib/utils";
 
 interface VerificationCardProps {
@@ -19,30 +21,37 @@ export function VerificationCard({
   const router = useRouter();
   const reactId = useId();
   const inputId = `serial-number-${reactId}`;
-  const feedbackId = `serial-feedback-${reactId}`;
   const headingId = `verify-heading-${reactId}`;
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  /** Prefill for local UI testing — any valid model-style barcode. */
-  const [serial, setSerial] = useState("BC-650-DEMO01");
-  const [status, setStatus] = useState<"idle" | "error" | "loading">("idle");
-  const [message, setMessage] = useState("");
+  const [serial, setSerial] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading">("idle");
+
+  // Next.js Activity keeps home mounted while hidden — clear on leave so
+  // returning from result / other pages shows an empty field.
+  useLayoutEffect(() => {
+    return () => {
+      setSerial("");
+      setStatus("idle");
+      formRef.current?.reset();
+    };
+  }, []);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const value = serial.trim();
     if (!value) {
-      setStatus("error");
-      setMessage("Please enter a serial number.");
+      toast.error("Please enter a product number.");
       return;
     }
     if (value.length < 6) {
-      setStatus("error");
-      setMessage("Serial numbers are typically at least 6 characters.");
+      toast.error("Product numbers are typically at least 6 characters.");
       return;
     }
+    const normalized = value.toUpperCase().replace(/\s+/g, "");
     setStatus("loading");
-    setMessage("");
-    router.push(`/verify/result?barcode=${encodeURIComponent(value)}`);
+    setSerial("");
+    router.push(`/verify/result?barcode=${encodeURIComponent(normalized)}`);
   }
 
   return (
@@ -61,7 +70,11 @@ export function VerificationCard({
               showBarcodeGuide ? "rounded-lg" : "rounded-full",
             )}
           >
-            <QrCode className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} aria-hidden />
+            <QrCode
+              className="h-4 w-4 sm:h-5 sm:w-5"
+              strokeWidth={1.75}
+              aria-hidden
+            />
           </span>
           {showBarcodeGuide && (
             <span className="text-[9px] font-semibold tracking-wide text-brand-mint/90 uppercase">
@@ -81,18 +94,37 @@ export function VerificationCard({
           </p>
           {showBarcodeGuide && (
             <p className="mt-1.5 text-[11px] leading-snug text-white/45">
-              Barcode guide: use the serial / barcode printed on the module
-              label.
+              Type the Product No. or use the camera to scan the module label.
             </p>
           )}
         </div>
       </div>
 
-      <form onSubmit={onSubmit} noValidate className="space-y-2">
+      <form
+        ref={formRef}
+        onSubmit={onSubmit}
+        noValidate
+        className="space-y-2"
+      >
         <label htmlFor={inputId} className="sr-only">
-          Product serial number
+          Product number
         </label>
-        <div className="flex min-w-0 overflow-hidden rounded-lg border border-white/20 bg-white/5 focus-within:border-brand-green focus-within:ring-1 focus-within:ring-brand-green">
+        <BarcodeScanner
+          onScan={(value) => {
+            setSerial(value);
+            if (status !== "idle") setStatus("idle");
+          }}
+          endAdornment={
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="flex h-11 w-11 shrink-0 items-center justify-center bg-brand-green text-white transition-colors hover:bg-brand-green-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-mint disabled:opacity-70"
+              aria-label="Submit product number"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          }
+        >
           <input
             id={inputId}
             name="serial"
@@ -102,33 +134,11 @@ export function VerificationCard({
             value={serial}
             onChange={(e) => {
               setSerial(e.target.value);
-              if (status !== "idle") {
-                setStatus("idle");
-                setMessage("");
-              }
+              if (status !== "idle") setStatus("idle");
             }}
-            aria-invalid={status === "error"}
-            aria-describedby={message ? feedbackId : undefined}
             className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none sm:px-3.5 sm:py-3"
           />
-          <button
-            type="submit"
-            disabled={status === "loading"}
-            className="flex w-11 shrink-0 items-center justify-center bg-brand-green text-white transition-colors hover:bg-brand-green-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-mint disabled:opacity-70"
-            aria-label="Submit serial number"
-          >
-            <ArrowRight className="h-4 w-4" />
-          </button>
-        </div>
-        {message && (
-          <p
-            id={feedbackId}
-            role="alert"
-            className="text-[11px] leading-snug text-red-300"
-          >
-            {message}
-          </p>
-        )}
+        </BarcodeScanner>
       </form>
     </aside>
   );

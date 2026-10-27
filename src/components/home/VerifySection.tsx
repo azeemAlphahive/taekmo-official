@@ -56,8 +56,8 @@ export function VerifySection({
               Verify Your Product
             </h1>
             <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-white/70 sm:text-[15px]">
-              Use the form to enter your product barcode and verification code.
-              Demo mode is active until the live verification API is connected.
+              Enter or scan the Product No. from your module label and confirm
+              with the on-screen verification code.
             </p>
           </div>
 
@@ -78,9 +78,8 @@ export function VerifySection({
               Verify Your Product
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70 sm:text-[15px]">
-              Enter your serial number to confirm your TAEKMO product is
-              genuine. Demo mode is active until the live verification API is
-              connected.
+              Enter or scan the Product No. from your module label to confirm
+              your TAEKMO panel is genuine.
             </p>
           </div>
 

@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { redirect } from "next/navigation";
-import { buildVerifyResult } from "@/data/verify";
-import { VerificationResultView } from "@/components/verify/VerificationResultView";
+import { lookupPanelByProductNo } from "@/data/verify";
+import { DismissVerifyToasts } from "@/components/verify/DismissVerifyToasts";
+import {
+  VerificationNotFoundView,
+  VerificationResultView,
+} from "@/components/verify/VerificationResultView";
 
 export const metadata: Metadata = {
   title: "Verification Result",
-  description: "TAEKMO product authenticity verification result (demo).",
+  description: "TAEKMO product authenticity verification result.",
 };
 
 async function ResultContent(props: PageProps<"/verify/result">) {
+  await connection();
   const params = await props.searchParams;
   const barcode =
     typeof params.barcode === "string" ? params.barcode.trim() : "";
@@ -18,7 +24,15 @@ async function ResultContent(props: PageProps<"/verify/result">) {
     redirect("/verify");
   }
 
-  const result = buildVerifyResult(barcode);
+  const result = await lookupPanelByProductNo(barcode);
+
+  if (!result) {
+    return (
+      <VerificationNotFoundView
+        code={barcode.toUpperCase().replace(/\s+/g, "")}
+      />
+    );
+  }
 
   return <VerificationResultView result={result} />;
 }
@@ -35,8 +49,11 @@ export default function VerificationResultPage(
   props: PageProps<"/verify/result">,
 ) {
   return (
-    <Suspense fallback={<ResultFallback />}>
-      <ResultContent {...props} />
-    </Suspense>
+    <>
+      <DismissVerifyToasts />
+      <Suspense fallback={<ResultFallback />}>
+        <ResultContent {...props} />
+      </Suspense>
+    </>
   );
 }

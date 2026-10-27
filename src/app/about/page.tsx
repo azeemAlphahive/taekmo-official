@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { WhoWeAre } from "@/components/about/WhoWeAre";
-import { WhyChoose } from "@/components/home/WhyChoose";
+import { PriorityMarkets } from "@/components/about/PriorityMarkets";
 import { Partners } from "@/components/home/Partners";
 import { aboutPage } from "@/data/solutions";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About TAEKMO — Talesun BIPRO & HYPRO modules, BloombergNEF Tier 1 platform, solutions for every scale.",
+    "TAEKMO — international sub-brand of Talesun Solar under the C&D Group. N-type modules for Middle East, Africa, South America, and Asia.",
 };
 
 export default function AboutPage() {
@@ -23,8 +23,8 @@ export default function AboutPage() {
         imageSrc="/images/hero/solar-farm.jpg"
       />
       <WhoWeAre />
-      <Partners />
-      <WhyChoose />
+      <PriorityMarkets />
+      <Partners variant="full" />
     </>
   );
 }

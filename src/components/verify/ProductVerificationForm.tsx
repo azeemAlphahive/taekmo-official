@@ -1,9 +1,11 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useId, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { QrCode, RefreshCw, Search } from "lucide-react";
+import { BarcodeScanner } from "@/components/verify/BarcodeScanner";
 import { cn } from "@/lib/utils";
 
 function createCaptchaCode(): string {
@@ -35,35 +37,37 @@ export function ProductVerificationForm({ className }: { className?: string }) {
   const uid = useId();
   const barcodeId = `barcode-${uid}`;
   const captchaId = `captcha-${uid}`;
-  const feedbackId = `verify-feedback-${uid}`;
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  /** Prefill for local UI testing — barcode + captcha match. */
-  const [barcode, setBarcode] = useState("BC-650-DEMO01");
-  const [captchaCode, setCaptchaCode] = useState("K7P2");
-  const [captchaInput, setCaptchaInput] = useState("K7P2");
+  const [barcode, setBarcode] = useState("");
+  const [captchaCode, setCaptchaCode] = useState(() => createCaptchaCode());
+  const [captchaInput, setCaptchaInput] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{
     barcode?: string;
     captcha?: string;
   }>({});
-  const [status, setStatus] = useState<"idle" | "error" | "loading">("idle");
-  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading">("idle");
 
   const captchaPattern = captchaNoise(captchaCode);
 
-  function clearStatus() {
-    if (status !== "idle") {
+  // Next.js Activity keeps /verify mounted while hidden. Always clear on hide
+  // so returning (back button or "Verify another") shows an empty form.
+  useLayoutEffect(() => {
+    return () => {
+      setBarcode("");
+      setCaptchaInput("");
+      setCaptchaCode(createCaptchaCode());
+      setFieldErrors({});
       setStatus("idle");
-      setMessage("");
-    }
-  }
+      formRef.current?.reset();
+    };
+  }, []);
 
   function refreshCaptcha() {
     const next = createCaptchaCode();
     setCaptchaCode(next);
-    // Keep autofilled for testing so submit stays one-click
-    setCaptchaInput(next);
+    setCaptchaInput("");
     setFieldErrors((prev) => ({ ...prev, captcha: undefined }));
-    clearStatus();
   }
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -73,9 +77,9 @@ export function ProductVerificationForm({ className }: { className?: string }) {
     const errors: { barcode?: string; captcha?: string } = {};
 
     if (!code) {
-      errors.barcode = "Please input the product barcode.";
+      errors.barcode = "Please input the product number.";
     } else if (code.length < 6) {
-      errors.barcode = "Barcode should be at least 6 characters.";
+      errors.barcode = "Product number should be at least 6 characters.";
     }
 
     if (!captcha) {
@@ -86,20 +90,18 @@ export function ProductVerificationForm({ className }: { className?: string }) {
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
-      setStatus("error");
-      setMessage("Please fix the highlighted fields and try again.");
+      toast.error("Please fix the highlighted fields and try again.");
       if (errors.captcha === "Verification code does not match.") {
-        const next = createCaptchaCode();
-        setCaptchaCode(next);
-        setCaptchaInput(next);
+        setCaptchaCode(createCaptchaCode());
+        setCaptchaInput("");
       }
       return;
     }
 
+    const normalized = code.toUpperCase().replace(/\s+/g, "");
     setFieldErrors({});
     setStatus("loading");
-    setMessage("Looking up product record…");
-    router.push(`/verify/result?barcode=${encodeURIComponent(code)}`);
+    router.push(`/verify/result?barcode=${encodeURIComponent(normalized)}`);
   }
 
   return (
@@ -127,45 +129,54 @@ export function ProductVerificationForm({ className }: { className?: string }) {
             Verification form
           </h2>
           <p className="mt-1 text-xs leading-relaxed text-white/65">
-            Enter the barcode from your module label and the on-screen
+            Enter the Product No. from your module label and the on-screen
             verification code.
           </p>
           <p className="mt-2 text-[11px] leading-snug text-white/45">
-            Barcode guide: find the number string on the front or back of the
-            module.
+            Product No. is the unique code on the module (e.g.
+            2604D72F2882009720).
           </p>
         </div>
       </div>
 
-      <form onSubmit={onSubmit} noValidate className="space-y-4">
+      <form
+        ref={formRef}
+        onSubmit={onSubmit}
+        noValidate
+        className="space-y-4"
+      >
         <div>
           <label
             htmlFor={barcodeId}
             className="mb-1.5 block text-xs font-semibold tracking-wide text-white/80 uppercase"
           >
-            Product barcode
+            Product No.
           </label>
-          <input
-            id={barcodeId}
-            name="barcode"
-            type="text"
-            autoComplete="off"
-            placeholder="Enter product barcode"
-            value={barcode}
-            onChange={(e) => {
-              setBarcode(e.target.value);
+          <BarcodeScanner
+            rowClassName={fieldErrors.barcode ? "border-red-400/70" : undefined}
+            onScan={(value) => {
+              setBarcode(value);
               setFieldErrors((prev) => ({ ...prev, barcode: undefined }));
-              clearStatus();
             }}
-            aria-invalid={Boolean(fieldErrors.barcode)}
-            aria-describedby={
-              fieldErrors.barcode ? `${barcodeId}-error` : undefined
-            }
-            className={cn(
-              inputClass,
-              fieldErrors.barcode && "border-red-400/70 focus:border-red-400",
-            )}
-          />
+          >
+            <input
+              id={barcodeId}
+              name="barcode"
+              type="text"
+              autoComplete="off"
+              placeholder="e.g. 2604D72F2882009720"
+              value={barcode}
+              onChange={(e) => {
+                setBarcode(e.target.value);
+                setFieldErrors((prev) => ({ ...prev, barcode: undefined }));
+              }}
+              aria-invalid={Boolean(fieldErrors.barcode)}
+              aria-describedby={
+                fieldErrors.barcode ? `${barcodeId}-error` : undefined
+              }
+              className="h-11 min-w-0 flex-1 bg-transparent px-3.5 text-sm text-white outline-none placeholder:text-white/35"
+            />
+          </BarcodeScanner>
           {fieldErrors.barcode && (
             <p
               id={`${barcodeId}-error`}
@@ -196,7 +207,6 @@ export function ProductVerificationForm({ className }: { className?: string }) {
               onChange={(e) => {
                 setCaptchaInput(e.target.value);
                 setFieldErrors((prev) => ({ ...prev, captcha: undefined }));
-                clearStatus();
               }}
               aria-invalid={Boolean(fieldErrors.captcha)}
               aria-describedby={
@@ -258,23 +268,10 @@ export function ProductVerificationForm({ className }: { className?: string }) {
           {status === "loading" ? "Searching…" : "Search"}
         </button>
 
-        {message && (
-          <p
-            id={feedbackId}
-            role={status === "error" ? "alert" : "status"}
-            className={cn(
-              "text-center text-xs leading-relaxed",
-              status === "error" ? "text-red-300" : "text-brand-mint/90",
-            )}
-          >
-            {message}
-          </p>
-        )}
-
         <div className="space-y-2.5 border-t border-white/10 pt-4">
           <p className="text-[11px] leading-relaxed text-white/55">
-            The product barcode is a string of numbers on the front or back of
-            the module, as shown below.
+            Type the Product No. or tap the camera icon to scan the barcode on
+            the module label.
           </p>
           <div className="overflow-hidden rounded-lg border border-white/10 bg-white/5">
             <Image
@@ -285,10 +282,6 @@ export function ProductVerificationForm({ className }: { className?: string }) {
               className="h-auto w-full opacity-90"
             />
           </div>
-          <p className="text-[10px] leading-relaxed text-white/40">
-            Try barcode <span className="text-brand-mint">TM-6A2B-84592173</span>{" "}
-            + the on-screen code. Demo lookup only.
-          </p>
         </div>
       </form>
     </aside>

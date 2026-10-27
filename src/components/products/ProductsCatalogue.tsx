@@ -30,8 +30,7 @@ export function ProductsCatalogue() {
               All Products
             </h2>
             <p className="mt-2 text-sm text-brand-muted">
-              Talesun BC (Back Contact) bestsellers, plus BIPRO (TOPCon) & HYPRO
-              (HJT) — BNEF Tier 1.
+              TAEKMO N-type modules — sorted from lower to higher watt class.
             </p>
           </div>
           <CategoryFilters active={category} onChange={setCategory} />
@@ -54,9 +53,7 @@ export function ProductsCatalogue() {
         )}
 
         <p className="mt-6 text-[11px] text-brand-muted">
-          Sourced from Talesun official datasheets (BC + BIPRO + HYPRO). Electrical
-          mid-bin values are interpolated across published watt ranges —
-          confirm the exact datasheet with your quote.
+          Confirm exact datasheet values with your TAEKMO quote.
         </p>
       </div>
     </section>

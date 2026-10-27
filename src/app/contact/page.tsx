@@ -15,7 +15,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="CONTACT"
         title="Contact Us"
-        description="Tell us about your project or product needs. Form submissions are demo-only until email/CRM is connected."
+        description="Tell us about your project or product needs. We will get back to you soon."
       />
 
       <section
@@ -61,7 +61,7 @@ export default function ContactPage() {
                     Headquarters
                   </span>
                   <span className="text-brand-muted">
-                    Address placeholder — update with official location.
+                    {siteConfig.address}
                   </span>
                 </span>
               </li>

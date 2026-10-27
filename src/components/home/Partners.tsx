@@ -1,110 +1,124 @@
 "use client";
 
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { partners } from "@/data/solutions";
 import { cn } from "@/lib/utils";
 
 interface PartnersProps {
   className?: string;
-  tone?: "light" | "dark";
+  /** compact = home; full = about / solutions */
+  variant?: "compact" | "full";
 }
 
-const liftCard =
-  "will-change-transform transition-[transform,box-shadow] duration-[1200ms] [transition-timing-function:cubic-bezier(0.33,1,0.32,1)] motion-safe:hover:-translate-y-4 motion-safe:hover:shadow-[0_32px_56px_-18px_rgba(4,16,10,0.28)] motion-safe:focus-within:-translate-y-4 motion-safe:focus-within:shadow-[0_32px_56px_-18px_rgba(4,16,10,0.28)]";
+const cardMotion =
+  "will-change-transform transition-[transform,box-shadow] duration-[1200ms] [transition-timing-function:cubic-bezier(0.33,1,0.32,1)] motion-safe:hover:-translate-y-2 motion-safe:hover:shadow-[0_24px_44px_-16px_rgba(4,16,10,0.22)]";
 
-export function Partners({ className, tone = "light" }: PartnersProps) {
-  const isDark = tone === "dark";
+export function Partners({
+  className,
+  variant = "compact",
+}: PartnersProps) {
+  const isFull = variant === "full";
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
       id="partners"
       className={cn(
-        "scroll-mt-24 py-14 sm:py-16 lg:py-20",
-        isDark ? "bg-brand-ink" : "bg-white",
+        "scroll-mt-24 overflow-hidden py-14 sm:py-16 lg:py-20",
+        isFull ? "bg-[#f4f7f5]" : "bg-white",
         className,
       )}
       aria-labelledby="partners-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionReveal className="mx-auto max-w-2xl text-center">
-          <p
-            className={cn(
-              "text-[11px] font-semibold tracking-[0.22em] uppercase",
-              isDark ? "text-brand-mint" : "text-brand-green",
-            )}
-          >
-            Our partners
-          </p>
-          <h2
-            id="partners-heading"
-            className={cn(
-              "mt-2 text-2xl font-bold tracking-tight sm:text-3xl",
-              isDark ? "text-white" : "text-brand-ink",
-            )}
-          >
-            Backed by C&amp;D Xiamen and Talesun
-          </h2>
-          <p
-            className={cn(
-              "mt-3 text-sm leading-relaxed sm:text-[15px]",
-              isDark ? "text-white/70" : "text-brand-muted",
-            )}
-          >
-            TAEKMO stands on a Fortune Global 500 industrial group and a
-            BloombergNEF Tier 1 module manufacturer.
-          </p>
+        <SectionReveal>
+          <div>
+            <p className="text-[11px] font-semibold tracking-[0.22em] text-brand-green uppercase">
+              Our partners
+            </p>
+            <h2
+              id="partners-heading"
+              className="mt-2 text-2xl font-bold tracking-tight text-brand-ink sm:text-3xl"
+            >
+              Backed by C&amp;D Xiamen and Talesun
+            </h2>
+            <p className="mt-2 max-w-xl text-sm text-brand-muted sm:text-[15px]">
+              TAEKMO stands on a Fortune Global 500 industrial group and a BNEF
+              Tier 1 module manufacturer.
+            </p>
+          </div>
         </SectionReveal>
 
-        <ul className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
+        <motion.ul
+          className="mt-10 grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 md:gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: reduceMotion ? 0 : 0.1,
+                delayChildren: reduceMotion ? 0 : 0.04,
+              },
+            },
+          }}
+        >
           {partners.map((partner) => (
-            <li key={partner.id}>
-              <SectionReveal>
-                <article
-                  className={cn(
-                    "flex h-full flex-col rounded-xl border p-6 shadow-sm sm:p-8",
-                    liftCard,
-                    isDark
-                      ? "border-white/10 bg-white/5 hover:border-brand-mint/30"
-                      : "border-brand-border bg-[#f4f7f5] hover:border-brand-green/35",
-                  )}
-                >
-                  <p
-                    className={cn(
-                      "text-[10px] font-semibold tracking-[0.18em] uppercase",
-                      isDark ? "text-brand-mint" : "text-brand-green",
-                    )}
-                  >
-                    {partner.role}
-                  </p>
-                  <h3
-                    className={cn(
-                      "mt-3 text-xl font-bold tracking-tight sm:text-2xl",
-                      isDark ? "text-white" : "text-brand-ink",
-                    )}
-                  >
-                    {partner.shortName}
-                  </h3>
-                  <p
-                    className={cn(
-                      "mt-1 text-sm font-medium",
-                      isDark ? "text-white/55" : "text-brand-muted",
-                    )}
-                  >
-                    {partner.name}
-                  </p>
-                  <p
-                    className={cn(
-                      "mt-4 text-sm leading-relaxed",
-                      isDark ? "text-white/70" : "text-brand-muted",
-                    )}
-                  >
-                    {partner.description}
-                  </p>
-                </article>
-              </SectionReveal>
-            </li>
+            <motion.li
+              key={partner.id}
+              variants={{
+                hidden: reduceMotion
+                  ? { opacity: 1 }
+                  : { opacity: 0, y: 18 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.45,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                },
+              }}
+            >
+              <a
+                href={partner.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "flex h-full flex-col rounded-xl border border-brand-border bg-white p-5 shadow-sm sm:p-6 lg:p-7",
+                  cardMotion,
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
+                )}
+              >
+                <div className="flex h-14 items-center sm:h-16">
+                  <Image
+                    src={partner.logo}
+                    alt={partner.logoAlt}
+                    width={180}
+                    height={64}
+                    className="h-full w-auto max-w-[180px] object-contain object-left"
+                  />
+                </div>
+
+                <p className="mt-4 text-[10px] font-semibold tracking-[0.16em] text-brand-green uppercase">
+                  {partner.role}
+                  <span className="text-brand-green/45"> · </span>
+                  {partner.credential}
+                </p>
+                <h3 className="mt-2 text-lg font-bold tracking-tight text-brand-ink sm:text-xl">
+                  {partner.shortName}
+                </h3>
+                <p className="mt-0.5 text-sm text-brand-muted">{partner.name}</p>
+                <p className="mt-3 text-sm leading-relaxed text-brand-muted">
+                  {isFull ? partner.description : partner.highlight}
+                </p>
+              </a>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       </div>
     </section>
   );

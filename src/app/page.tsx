@@ -4,6 +4,7 @@ import { ProductRange } from "@/components/home/ProductRange";
 import { Solutions } from "@/components/home/Solutions";
 import { WhyChoose } from "@/components/home/WhyChoose";
 import { Partners } from "@/components/home/Partners";
+import { Distributors } from "@/components/home/Distributors";
 import { LatestInsights } from "@/components/home/LatestInsights";
 import { HomeBottomBand } from "@/components/home/HomeBottomBand";
 
@@ -15,8 +16,9 @@ export default function HomePage() {
       <ProductRange />
       <Solutions />
       <WhyChoose />
-      <Partners />
       <LatestInsights />
+      <Partners />
+      <Distributors />
       <HomeBottomBand />
     </>
   );

@@ -36,23 +36,79 @@ export const solutionsPage = {
   },
 } as const;
 
-/** About page — same editorial voice, TAEKMO / Talesun brand facts. */
+/**
+ * About page — aligned with https://www.taekmosolar.com/about
+ */
 export const aboutPage = {
   hero: {
     eyebrow: "ABOUT TAEKMO",
-    title: "Better Energy. A Brighter Future.",
+    title: "TAEKMO",
     description:
-      "TAEKMO is Talesun’s international sub-brand — backed by Xiamen C&D Group and BloombergNEF Tier 1 module technology.",
+      "International sub-brand of Talesun Solar, under the C&D Group.",
   },
   story: {
-    title: "Who we are",
+    title: "International sub-brand of Talesun Solar, under the C&D Group",
     lead:
-      "TAEKMO is a solar brand focused on high-performance modules and clear project guidance — from first quote to long-term yield.",
+      "TAEKMO was established as the dedicated international sub-brand of Talesun Solar to serve overseas markets with tailored product design, pricing, and support—while sharing the manufacturing strength and quality systems of a world-class PV group under C&D.",
     paragraphs: [
-      "TAEKMO was established by Talesun Solar as a dedicated international sub-brand, with tailored product, pricing, and go-to-market approaches for global customers. We supply BIPRO (N-type TOPCon) and HYPRO (HJT) bifacial dual-glass modules on the Talesun manufacturing platform — a BloombergNEF Tier 1 PV module manufacturer.",
-      "Talesun Solar is a key subsidiary of Xiamen C&D Group (C&D Inc.), a Fortune Global 500 enterprise. That partnership anchors supply-chain strength, financial backing, and long-term bankability for projects that specify TAEKMO modules.",
-      "Our catalogue covers residential aesthetics (compact and full-black options), commercial and industrial rooftops and carports, and utility-scale high-watt classes designed for lower LCOE. Whether you are cutting a household bill or specifying a multi-megawatt plant, TAEKMO pairs product depth with practical support.",
+      "From our base at No.1 Talesun Road in Changshu, China, we specialize in cutting-edge N-type module technology and integrated energy systems. Our focus is clear: empower industries, communities, and households across priority growth regions to transition seamlessly to clean, reliable power.",
     ],
+  },
+  why: {
+    eyebrow: "Why TAEKMO",
+    title: "Global-standard solar, built for international markets",
+    items: [
+      {
+        id: "international",
+        title: "International brand",
+        description:
+          "A Talesun Solar sub-brand purpose-built for global market expansion and local requirements.",
+      },
+      {
+        id: "manufacturing",
+        title: "Manufacturing heritage",
+        description:
+          "Backed by Talesun’s production capability and C&D Group’s supply-chain strength.",
+      },
+      {
+        id: "quality",
+        title: "Quality you can check",
+        description:
+          "High-efficiency modules with long-term warranties and online panel authenticity verification.",
+      },
+    ],
+  },
+  markets: {
+    eyebrow: "Priority markets",
+    title: "Focused where solar growth is accelerating",
+    items: [
+      {
+        id: "middle-east",
+        region: "Middle East",
+        focus: "Utility & C&I focus",
+      },
+      {
+        id: "africa",
+        region: "Africa",
+        focus: "Growing PV demand",
+      },
+      {
+        id: "south-america",
+        region: "South America",
+        focus: "Expanding footprint",
+      },
+      {
+        id: "asia",
+        region: "Asia",
+        focus: "Priority region",
+      },
+    ],
+  },
+  headquarters: {
+    label: "Headquarters",
+    address:
+      "No.1 Talesun Road, Shajiabang, Changshu, Suzhou, Jiangsu Province, China 215542",
+    email: "sales@taekmosolar.com",
   },
 } as const;
 
@@ -65,7 +121,13 @@ export const partners = [
     id: "cd-xiamen",
     name: "Xiamen C&D Group",
     shortName: "C&D Xiamen",
-    role: "Strategic partner · Fortune Global 500",
+    credential: "Fortune Global 500",
+    role: "Strategic industrial partner",
+    logo: "/images/partners/cd-xiamen-logo.svg",
+    logoAlt: "C&D Xiamen logo",
+    logoInvertOnDark: true,
+    website: "https://www.cndnewenergy.com/",
+    highlight: "Controlling shareholder of Talesun Solar",
     description:
       "Xiamen C&D Group Co., Ltd. (C&D Inc.) is the actual controlling shareholder of Talesun Solar following the group restructuring — bringing Fortune Global 500 scale, supply-chain strength, and long-term industrial backing to the TAEKMO platform.",
   },
@@ -73,9 +135,15 @@ export const partners = [
     id: "talesun",
     name: "Talesun Solar",
     shortName: "Talesun",
-    role: "Technology & manufacturing partner · BNEF Tier 1",
+    credential: "BNEF Tier 1",
+    role: "Technology & manufacturing",
+    logo: "/images/partners/talesun-logo.png",
+    logoAlt: "Talesun Solar logo",
+    logoInvertOnDark: false,
+    website: "https://en.talesun.com/",
+    highlight: "Parent brand behind TAEKMO modules",
     description:
-      "Suzhou Talesun Solar Technologies Co., Ltd. established TAEKMO as its international sub-brand. Talesun provides BIPRO TOPCon and HYPRO HJT module platforms, global manufacturing capacity, and BloombergNEF Tier 1 bankability.",
+      "Suzhou Talesun Solar Technologies Co., Ltd. established TAEKMO as its international sub-brand. Talesun provides N-type module platforms, global manufacturing capacity, and quality systems shared with TAEKMO for overseas markets.",
   },
 ] as const;
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   BadgeCheck,
-  Calendar,
+  CircleAlert,
   Factory,
   Gauge,
   Package,
@@ -20,15 +20,17 @@ interface VerificationResultViewProps {
 export function VerificationResultView({ result }: VerificationResultViewProps) {
   const rows = [
     { icon: Package, label: "Model", value: result.model },
-    { icon: QrCode, label: "Barcode", value: result.barcode },
-    { icon: Factory, label: "Serial number", value: result.serialNumber },
+    { icon: QrCode, label: "Product No.", value: result.barcode },
+    { icon: Factory, label: "Product type", value: result.productType },
+    { icon: ShieldCheck, label: "Pallet No.", value: result.palletNo },
+    { icon: Zap, label: "Label power", value: result.power },
+    { icon: Gauge, label: "Pmax", value: result.pmax },
+    { icon: Gauge, label: "FF", value: result.ff },
+    { icon: Zap, label: "Voc", value: result.voc },
+    { icon: Zap, label: "Isc", value: result.isc },
+    { icon: Zap, label: "Vpm", value: result.vpm },
+    { icon: Zap, label: "Ipm", value: result.ipm },
     { icon: ShieldCheck, label: "Category", value: result.categoryLabel },
-    { icon: Zap, label: "Rated power", value: result.power },
-    { icon: Gauge, label: "Efficiency", value: result.efficiency },
-    { icon: Calendar, label: "Manufacture date", value: result.manufactureDate },
-    { icon: Calendar, label: "Ship date", value: result.shipDate },
-    { icon: ShieldCheck, label: "Warranty", value: result.warrantyStatus },
-    { icon: Factory, label: "Channel", value: result.origin },
   ];
 
   return (
@@ -89,10 +91,10 @@ export function VerificationResultView({ result }: VerificationResultViewProps) 
 
           <div className="rounded-xl border border-white/10 bg-[#12161c]/85 p-5 shadow-2xl backdrop-blur-md sm:p-6">
             <h2 className="text-base font-semibold text-white">
-              Product record
+              Product details
             </h2>
             <p className="mt-1 text-xs text-white/55">
-              Dummy demo details generated for this barcode lookup.
+              Verified against the TAEKMO authenticity database.
             </p>
 
             <dl className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -117,10 +119,18 @@ export function VerificationResultView({ result }: VerificationResultViewProps) 
             </dl>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href={result.productHref} variant="primary" className="flex-1">
+              <Button
+                href={result.productHref}
+                variant="primary"
+                className="flex-1"
+              >
                 View product page
               </Button>
-              <Button href="/verify" variant="outline" className="flex-1 border-brand-green text-brand-mint hover:bg-brand-green/15">
+              <Button
+                href="/verify"
+                variant="outline"
+                className="flex-1 border-brand-green text-brand-mint hover:bg-brand-green/15"
+              >
                 Verify another
               </Button>
             </div>
@@ -128,12 +138,57 @@ export function VerificationResultView({ result }: VerificationResultViewProps) 
         </div>
 
         <p className="mx-auto mt-8 max-w-2xl text-center text-[11px] text-white/40">
-          * Specs and warranty status are illustrative placeholders. Replace with
-          live verification API data when available.{" "}
+          Need assistance?{" "}
           <Link href="/support" className="text-brand-mint hover:underline">
-            Need help?
+            Contact support
           </Link>
         </p>
+      </div>
+    </div>
+  );
+}
+
+export function VerificationNotFoundView({ code }: { code: string }) {
+  return (
+    <div className="relative overflow-hidden bg-brand-ink pt-24 lg:pt-28">
+      <Image
+        src="/images/solutions/solutions-bg.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover opacity-35"
+        aria-hidden
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-brand-ink/85 via-brand-ink/80 to-brand-ink"
+        aria-hidden
+      />
+
+      <div className="relative mx-auto max-w-xl px-4 py-16 text-center sm:px-6 lg:py-24">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-amber-400/40 bg-amber-400/10 text-amber-300">
+          <CircleAlert className="h-7 w-7" strokeWidth={1.75} aria-hidden />
+        </div>
+        <h1 className="mt-5 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          Panel not found
+        </h1>
+        <p className="mt-3 text-sm leading-relaxed text-white/65">
+          No matching product was found for{" "}
+          <span className="font-mono text-brand-mint">{code}</span>. Check the
+          Product No. on the module label and try again.
+        </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <Button href="/verify" variant="primary">
+            Try again
+          </Button>
+          <Button
+            href="/support"
+            variant="outline"
+            className="border-brand-green text-brand-mint hover:bg-brand-green/15"
+          >
+            Contact support
+          </Button>
+        </div>
       </div>
     </div>
   );

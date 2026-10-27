@@ -2,41 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Globe2, Layers, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { aboutPage } from "@/data/solutions";
-import { cn } from "@/lib/utils";
-
-const highlights = [
-  {
-    id: "sub-brand",
-    icon: Globe2,
-    title: "International sub-brand",
-    description:
-      "TAEKMO was established by Talesun for global markets — tailored products and go-to-market.",
-  },
-  {
-    id: "platform",
-    icon: Layers,
-    title: "BIPRO & HYPRO platform",
-    description:
-      "N-type TOPCon and HJT bifacial dual-glass modules on a BNEF Tier 1 line.",
-  },
-  {
-    id: "backed",
-    icon: ShieldCheck,
-    title: "C&D Xiamen backed",
-    description:
-      "Anchored by Xiamen C&D Group — Fortune Global 500 industrial strength.",
-  },
-] as const;
-
-const liftCard =
-  "will-change-transform transition-[transform,box-shadow] duration-[1200ms] [transition-timing-function:cubic-bezier(0.33,1,0.32,1)] motion-safe:hover:-translate-y-4 motion-safe:hover:shadow-[0_32px_56px_-18px_rgba(4,16,10,0.28)] motion-safe:focus-within:-translate-y-4 motion-safe:focus-within:shadow-[0_32px_56px_-18px_rgba(4,16,10,0.28)]";
 
 export function WhoWeAre() {
-  const { story } = aboutPage;
+  const { story, why, headquarters } = aboutPage;
 
   return (
     <section
@@ -61,7 +33,7 @@ export function WhoWeAre() {
             </p>
             <h2
               id="about-story-heading"
-              className="mt-2 text-3xl font-bold tracking-tight text-brand-ink sm:text-4xl lg:text-[2.5rem] lg:leading-[1.12]"
+              className="mt-2 text-3xl font-bold tracking-tight text-brand-ink sm:text-4xl lg:text-[2.35rem] lg:leading-[1.15]"
             >
               {story.title}
             </h2>
@@ -70,27 +42,24 @@ export function WhoWeAre() {
             </p>
             <div className="mt-6 space-y-4 text-sm leading-relaxed text-brand-muted sm:text-[15px]">
               {story.paragraphs.map((p) => (
-                <p key={p.slice(0, 40)}>{p}</p>
+                <p key={p.slice(0, 48)}>{p}</p>
               ))}
             </div>
+            <p className="mt-5 text-sm leading-relaxed text-brand-muted">
+              <span className="font-semibold text-brand-ink">
+                {headquarters.label}:{" "}
+              </span>
+              {headquarters.address}
+            </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="/contact" variant="primary">
                 Contact us
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Button>
-              <Button href="/solutions" variant="outline">
-                Our solutions
+              <Button href="/products#all-products" variant="outline">
+                View products
               </Button>
             </div>
-            <p className="mt-6 text-sm text-brand-muted">
-              Exploring modules?{" "}
-              <Link
-                href="/products#all-products"
-                className="font-semibold text-brand-green transition-colors hover:text-brand-green-dark"
-              >
-                View all products
-              </Link>
-            </p>
           </SectionReveal>
 
           <SectionReveal delay={0.1}>
@@ -98,7 +67,7 @@ export function WhoWeAre() {
               <div className="relative aspect-[4/3] sm:aspect-[5/4]">
                 <Image
                   src="/images/solutions/commercial.jpg"
-                  alt="TAEKMO solar solutions for real-world projects"
+                  alt="TAEKMO solar modules for international markets"
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-cover"
@@ -109,10 +78,10 @@ export function WhoWeAre() {
                 />
                 <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
                   <p className="text-[10px] font-semibold tracking-[0.2em] text-brand-mint uppercase">
-                    Talesun · C&amp;D Xiamen
+                    Talesun · C&amp;D Group
                   </p>
                   <p className="mt-1.5 text-lg font-bold text-white sm:text-xl">
-                    Better Energy. A Brighter Future.
+                    International solar modules for a cleaner world
                   </p>
                 </div>
               </div>
@@ -120,31 +89,50 @@ export function WhoWeAre() {
           </SectionReveal>
         </div>
 
-        <ul className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-3 sm:gap-5">
-          {highlights.map((item) => {
-            const Icon = item.icon;
-            return (
+        <div className="mt-16 border-t border-brand-ink/10 pt-14 sm:mt-20 sm:pt-16">
+          <SectionReveal>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-xl">
+                <p className="text-[11px] font-semibold tracking-[0.22em] text-brand-green uppercase">
+                  {why.eyebrow}
+                </p>
+                <h3 className="mt-2 text-2xl font-bold tracking-tight text-brand-ink sm:text-3xl">
+                  {why.title}
+                </h3>
+              </div>
+              <Link
+                href="/verify"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green transition-colors hover:text-brand-green-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
+              >
+                Verify a panel
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+          </SectionReveal>
+
+          <ol className="mt-10 grid grid-cols-1 divide-y divide-brand-ink/10 border-y border-brand-ink/10 sm:mt-12 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            {why.items.map((item, index) => (
               <li key={item.id}>
-                <article
-                  className={cn(
-                    "flex h-full flex-col rounded-xl border border-brand-border bg-white p-5 shadow-sm sm:p-6",
-                    liftCard,
-                  )}
-                >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-green/10 text-brand-green">
-                    <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-                  </span>
-                  <h3 className="mt-4 text-sm font-bold text-brand-ink sm:text-[15px]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-brand-muted sm:text-[13px]">
-                    {item.description}
-                  </p>
-                </article>
+                <SectionReveal delay={index * 0.08}>
+                  <article className="group flex h-full flex-col px-0 py-8 sm:px-6 sm:py-10 lg:px-8">
+                    <span
+                      className="font-mono text-[11px] font-semibold tracking-[0.18em] text-brand-green uppercase"
+                      aria-hidden
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h4 className="mt-5 text-lg font-bold tracking-tight text-brand-ink transition-colors duration-300 group-hover:text-brand-green sm:text-xl">
+                      {item.title}
+                    </h4>
+                    <p className="mt-3 text-sm leading-relaxed text-brand-muted sm:text-[15px]">
+                      {item.description}
+                    </p>
+                  </article>
+                </SectionReveal>
               </li>
-            );
-          })}
-        </ul>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

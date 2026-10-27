@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "Verify Product",
   description:
-    "Verify your TAEKMO product serial number. Demo mode until live verification is connected.",
+    "Verify your TAEKMO module Product No. in the authenticity database.",
 };
 
 export default function VerifyPage() {
@@ -17,8 +17,8 @@ export default function VerifyPage() {
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
           <h2 className="text-xl font-bold text-brand-ink">Need help?</h2>
           <p className="mt-2 text-sm text-brand-muted">
-            If your serial number does not look familiar, contact support and we
-            will assist once live verification is available.
+            If your Product No. is not found, contact support with a clear photo
+            of the module label.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button href="/support" variant="secondary">

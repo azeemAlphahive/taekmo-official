@@ -1,18 +1,17 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
 
 interface ProductInquiryFormProps {
   productName: string;
 }
 
 export function ProductInquiryForm({ productName }: ProductInquiryFormProps) {
-  const [status, setStatus] = useState<"idle" | "error" | "demo">("idle");
-  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -22,16 +21,47 @@ export function ProductInquiryForm({ productName }: ProductInquiryFormProps) {
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     if (!name || !emailOk || !note) {
-      setStatus("error");
-      setMessage("Please provide your name, a valid email, and a short message.");
+      toast.error(
+        "Please provide your name, a valid email, and a short message.",
+      );
       return;
     }
 
-    setStatus("demo");
-    setMessage(
-      "Demo only — your inquiry was not sent. A real CRM/email integration is not connected yet.",
-    );
-    form.reset();
+    setLoading(true);
+    const toastId = toast.loading("Sending inquiry…");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message: note,
+          subject: `Product inquiry: ${productName}`,
+        }),
+      });
+      const payload = (await res.json()) as {
+        message?: string;
+        emailSkipped?: boolean;
+      };
+      if (!res.ok) {
+        toast.error(payload.message || "Could not send inquiry.", {
+          id: toastId,
+        });
+        return;
+      }
+      toast.success(
+        payload.emailSkipped
+          ? "Inquiry saved. Email delivery is not configured yet (add RESEND_API_KEY)."
+          : "Inquiry sent. We will follow up soon.",
+        { id: toastId },
+      );
+      form.reset();
+    } catch {
+      toast.error("Network error. Please try again.", { id: toastId });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -47,11 +77,14 @@ export function ProductInquiryForm({ productName }: ProductInquiryFormProps) {
         Inquire about {productName}
       </h2>
       <p className="mt-1 text-sm text-brand-muted">
-        Share your project details and we will follow up. Submissions are demo
-        mode only until a backend is connected.
+        Share your project details and we will follow up.
       </p>
 
-      <form onSubmit={onSubmit} noValidate className="mt-5 grid gap-4 sm:grid-cols-2">
+      <form
+        onSubmit={(e) => void onSubmit(e)}
+        noValidate
+        className="mt-5 grid gap-4 sm:grid-cols-2"
+      >
         <div className="sm:col-span-1">
           <label
             htmlFor="inquire-name"
@@ -96,21 +129,10 @@ export function ProductInquiryForm({ productName }: ProductInquiryFormProps) {
             className="w-full resize-y rounded-md border border-brand-border bg-white px-3 py-2.5 text-sm text-brand-ink outline-none transition-colors focus:border-brand-green focus:ring-1 focus:ring-brand-green"
           />
         </div>
-        <div className="sm:col-span-2 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <Button type="submit" variant="primary">
-            Send Inquiry
+        <div className="sm:col-span-2">
+          <Button type="submit" variant="primary" disabled={loading}>
+            {loading ? "Sending…" : "Send Inquiry"}
           </Button>
-          {message && (
-            <p
-              role={status === "error" ? "alert" : "status"}
-              className={cn(
-                "text-xs",
-                status === "error" ? "text-red-600" : "text-brand-green",
-              )}
-            >
-              {message}
-            </p>
-          )}
         </div>
       </form>
     </section>

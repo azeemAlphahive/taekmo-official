@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
+import { AppToaster } from "@/components/ui/AppToaster";
 import { siteConfig } from "@/data/content";
 import "./globals.css";
 
@@ -26,6 +27,15 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: ["/favicon-32.png"],
+  },
   openGraph: {
     title: `${siteConfig.name} Solar`,
     description: siteConfig.description,
@@ -62,6 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="relative w-full max-w-full flex-1 overflow-x-hidden">{children}</main>
         <Footer />
         <ScrollToTop />
+        <AppToaster />
       </body>
     </html>
   );

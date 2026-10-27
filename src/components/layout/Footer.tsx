@@ -2,29 +2,57 @@
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { ArrowRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { footerColumns, siteConfig } from "@/data/content";
 
 export function Footer() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "error" | "demo">("idle");
-  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const value = email.trim();
     const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     if (!valid) {
-      setStatus("error");
-      setMessage("Enter a valid email address.");
+      toast.error("Enter a valid email address.");
       return;
     }
-    setStatus("demo");
-    setMessage(
-      "Thanks — demo confirmation only. Newsletter service is not connected yet.",
-    );
-    setEmail("");
+
+    setLoading(true);
+    const toastId = toast.loading("Subscribing…");
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: value }),
+      });
+      const payload = (await res.json()) as {
+        message?: string;
+        alreadySubscribed?: boolean;
+        emailSkipped?: boolean;
+      };
+      if (!res.ok) {
+        toast.error(payload.message || "Could not subscribe.", { id: toastId });
+        return;
+      }
+      if (payload.alreadySubscribed) {
+        toast.success("You are already subscribed.", { id: toastId });
+      } else {
+        toast.success(
+          payload.emailSkipped
+            ? "Subscribed and saved. Email delivery is not configured yet (add RESEND_API_KEY)."
+            : "Thanks for subscribing.",
+          { id: toastId },
+        );
+      }
+      setEmail("");
+    } catch {
+      toast.error("Network error. Please try again.", { id: toastId });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -51,7 +79,11 @@ export function Footer() {
               {siteConfig.description}
             </p>
 
-            <form onSubmit={onSubmit} className="mt-6 max-w-sm" noValidate>
+            <form
+              onSubmit={(e) => void onSubmit(e)}
+              className="mt-6 max-w-sm"
+              noValidate
+            >
               <label
                 htmlFor="newsletter-email"
                 className="mb-2 block text-xs font-semibold tracking-wide text-white/80 uppercase"
@@ -66,36 +98,18 @@ export function Footer() {
                   autoComplete="email"
                   placeholder="Enter your email"
                   value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (status !== "idle") {
-                      setStatus("idle");
-                      setMessage("");
-                    }
-                  }}
-                  aria-invalid={status === "error"}
-                  aria-describedby={message ? "newsletter-feedback" : undefined}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none"
                 />
                 <button
                   type="submit"
-                  className="flex shrink-0 items-center justify-center bg-brand-green px-3 text-white transition-colors hover:bg-brand-green-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-mint"
+                  disabled={loading}
+                  className="flex shrink-0 items-center justify-center bg-brand-green px-3 text-white transition-colors hover:bg-brand-green-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-mint disabled:opacity-60"
                   aria-label="Subscribe to newsletter"
                 >
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
-              {message && (
-                <p
-                  id="newsletter-feedback"
-                  role={status === "error" ? "alert" : "status"}
-                  className={`mt-2 text-[11px] ${
-                    status === "error" ? "text-red-300" : "text-brand-mint/90"
-                  }`}
-                >
-                  {message}
-                </p>
-              )}
             </form>
           </div>
 

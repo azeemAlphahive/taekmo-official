@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Panel {
+  id          String   @id @default(cuid())
+  productNo   String   @unique
+  serialNo    String
+  productType String?
+  palletNo    String?
+  labelWatt   Int?
+  pmax        Float?
+  ff          Float?
+  voc         Float?
+  isc         Float?
+  vpm         Float?
+  ipm         Float?
+  sourceFile  String?
+  importedAt  DateTime @default(now())
+
+  @@index([serialNo])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  /// Optional product / source context (e.g. product inquiry)
+  subject   String?
+  status    String   @default("new") // new | read | archived
+  adminNote String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  status    String   @default("active") // active | unsubscribed
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+/// Singleton site email settings (id is always "default").
+model SiteSettings {
+  id          String   @id @default("default")
+  notifyEmail String?
+  fromName    String?
+  fromEmail   String?
+  updatedAt   DateTime @updatedAt
+}

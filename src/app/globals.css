@@ -95,3 +95,32 @@ body {
     animation: none;
   }
 }
+
+/* html5-qrcode viewport — keep camera feed inside the modal frame */
+.barcode-scanner-reader {
+  border: none !important;
+}
+
+.barcode-scanner-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.barcode-scanner-reader img {
+  display: none !important;
+}
+
+.barcode-scanner-reader > div {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.barcode-scanner-reader #qr-shaded-region {
+  border-width: 2px !important;
+}
+
+.barcode-scanner-reader button,
+.barcode-scanner-reader select {
+  display: none !important;
+}
