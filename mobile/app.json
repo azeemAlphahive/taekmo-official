@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "TAEKMO Solar",
+    "slug": "taekmo-solar",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "taekmo",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#101217"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#101217",
+      "barStyle": "light-content"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.taekmosolar.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "TAEKMO uses the camera to scan product barcodes for authenticity verification.",
+        "NSPhotoLibraryUsageDescription": "TAEKMO may access photos when you share product images."
+      }
+    },
+    "android": {
+      "package": "com.taekmosolar.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#101217"
+      },
+      "permissions": ["CAMERA", "INTERNET"],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#101217",
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "imageWidth": 280
+        }
+      ],
+      "expo-system-ui"
+    ],
+    "extra": {
+      "webUrl": "https://www.taekmosolar.com"
+    }
+  }
+}

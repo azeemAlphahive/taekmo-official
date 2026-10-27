@@ -43,8 +43,8 @@ export function Hero() {
         aria-hidden
       />
 
-      <div className="relative z-20 mx-auto box-border flex h-full w-full max-w-7xl flex-col px-4 pt-24 pb-16 sm:px-6 sm:pt-28 sm:pb-24 lg:px-8 lg:pt-[128px] lg:pb-24">
-        <div className="flex w-full min-w-0 flex-col gap-5 pt-6 sm:gap-8 sm:pt-0 lg:max-w-[54%] lg:flex-1 lg:justify-center lg:gap-0 lg:pb-20 lg:pt-6">
+      <div className="relative z-20 mx-auto box-border flex h-full w-full max-w-7xl flex-col px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-24 lg:px-8 lg:pt-[100px] lg:pb-24">
+        <div className="flex w-full min-w-0 flex-col gap-5 pt-2 sm:gap-8 sm:pt-0 lg:max-w-[54%] lg:flex-1 lg:justify-start lg:gap-0 lg:pt-2 lg:pb-20">
           <div className="flex w-full min-w-0 flex-col">
             <motion.p
               {...fade(0.05)}
