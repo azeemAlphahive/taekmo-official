@@ -3,11 +3,15 @@ import Image from "next/image";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/Button";
 
-export const metadata: Metadata = {
-  title: "Projects",
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "TAEKMO Solar Projects | Residential, C&I & Utility",
   description:
-    "Explore illustrative TAEKMO solar project examples across residential, commercial, and utility applications.",
-};
+    "Explore illustrative TAEKMO solar project examples across residential rooftops, commercial sites, and utility-scale plants.",
+  path: "/projects",
+  keywords: ["TAEKMO projects", "TAEKMO solar plant", "TAEKMO installation"],
+});
 
 const projects = [
   {

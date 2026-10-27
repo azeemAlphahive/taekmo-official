@@ -1,12 +1,19 @@
-import type { Metadata } from "next";
 import { VerifySection } from "@/components/home/VerifySection";
 import { Button } from "@/components/ui/Button";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Verify Product",
+export const metadata = buildPageMetadata({
+  title: "Verify TAEKMO Product | Official Authenticity Check",
   description:
-    "Verify your TAEKMO module Product No. in the authenticity database.",
-};
+    "Verify your TAEKMO solar module Product No. or barcode in the official authenticity database. Confirm genuine TAEKMO panels before installation.",
+  path: "/verify",
+  keywords: [
+    "verify TAEKMO",
+    "TAEKMO authenticity",
+    "TAEKMO barcode check",
+    "genuine TAEKMO panel",
+  ],
+});
 
 export default function VerifyPage() {
   return (

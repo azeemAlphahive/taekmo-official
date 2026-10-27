@@ -58,19 +58,30 @@ function roundY(y: number): number {
   return Math.round(y);
 }
 
-function itemsFromContent(content: {
-  items: Array<{ str?: string; transform?: number[] }>;
-}): TextItem[] {
-  return content.items
-    .filter((it) => it && typeof it.str === "string" && it.str.trim())
-    .map((it) => {
-      const t = it.transform || [1, 0, 0, 1, 0, 0];
-      return {
-        str: String(it.str).trim(),
-        x: t[4] ?? 0,
-        y: t[5] ?? 0,
-      };
+function itemsFromContent(content: unknown): TextItem[] {
+  const items =
+    content &&
+    typeof content === "object" &&
+    "items" in content &&
+    Array.isArray((content as { items: unknown }).items)
+      ? ((content as { items: unknown[] }).items)
+      : [];
+
+  const out: TextItem[] = [];
+  for (const raw of items) {
+    if (!raw || typeof raw !== "object") continue;
+    const it = raw as { str?: unknown; transform?: unknown };
+    if (typeof it.str !== "string" || !it.str.trim()) continue;
+    const t = Array.isArray(it.transform)
+      ? (it.transform as number[])
+      : [1, 0, 0, 1, 0, 0];
+    out.push({
+      str: it.str.trim(),
+      x: t[4] ?? 0,
+      y: t[5] ?? 0,
     });
+  }
+  return out;
 }
 
 function findHeaderCenters(items: TextItem[]): Partial<Record<HeaderKey, number>> | null {

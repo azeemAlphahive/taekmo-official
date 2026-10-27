@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionsPageView } from "@/components/solutions/SolutionsPageView";
 import { solutionsPage } from "@/data/solutions";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Our Solutions",
+export const metadata: Metadata = buildPageMetadata({
+  title: "TAEKMO Solar Solutions | Residential, C&I & Utility",
   description:
-    "TAEKMO solar solutions for residential, commercial & industrial, and utility-scale projects — Talesun BIPRO & HYPRO, BloombergNEF Tier 1.",
-};
+    "TAEKMO solar solutions for residential, commercial & industrial, and utility-scale projects — Talesun BIPRO & HYPRO technology with bankable performance.",
+  path: "/solutions",
+  keywords: [
+    "TAEKMO solar solutions",
+    "utility solar TAEKMO",
+    "commercial solar panels",
+  ],
+});
 
 export default function SolutionsPage() {
   const { hero } = solutionsPage;

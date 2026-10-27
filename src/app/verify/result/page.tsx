@@ -9,10 +9,16 @@ import {
   VerificationResultView,
 } from "@/components/verify/VerificationResultView";
 
-export const metadata: Metadata = {
-  title: "Verification Result",
-  description: "TAEKMO product authenticity verification result.",
-};
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "TAEKMO Verification Result",
+  description:
+    "Official TAEKMO product authenticity verification result for your solar module Product No.",
+  path: "/verify/result",
+  keywords: ["TAEKMO verification result"],
+  noIndex: true,
+});
 
 async function ResultContent(props: PageProps<"/verify/result">) {
   await connection();

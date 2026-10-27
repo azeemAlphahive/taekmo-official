@@ -5,11 +5,15 @@ import { PageHero } from "@/components/layout/PageHero";
 import { VerifySection } from "@/components/home/VerifySection";
 import { Button } from "@/components/ui/Button";
 
-export const metadata: Metadata = {
-  title: "Support",
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "TAEKMO Support | Help, Warranty & Verification",
   description:
-    "TAEKMO support resources, product verification, warranty guidance, and contact options.",
-};
+    "TAEKMO support resources — product verification, warranty guidance, documentation, and contact options for genuine TAEKMO modules.",
+  path: "/support",
+  keywords: ["TAEKMO support", "TAEKMO warranty", "TAEKMO help center"],
+});
 
 const links = [
   {

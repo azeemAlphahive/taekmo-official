@@ -4,7 +4,7 @@ export const siteConfig = {
   name: "TAEKMO",
   tagline: "Better Energy. A Brighter Future.",
   description:
-    "TAEKMO delivers high-performance solar panels, inverters, batteries, and complete solar solutions for homes and businesses.",
+    "Official TAEKMO Solar website — high-efficiency N-type solar panels, Talesun TAEKMO modules, project solutions, and product authenticity verification for homes, businesses, and utility projects.",
   url: "https://www.taekmosolar.com",
   email: "sales@taekmosolar.com",
   phone: "+92 300 0000000",
@@ -121,11 +121,11 @@ export const footerColumns: FooterColumn[] = [
 ];
 
 export const heroContent = {
-  eyebrow: "TAEKMO SOLAR SOLUTIONS",
-  headline: "Clean Energy for a Brighter",
+  eyebrow: "OFFICIAL TAEKMO SOLAR WEBSITE",
+  headline: "TAEKMO Solar — Clean Energy for a Brighter",
   headlineAccent: "Tomorrow",
   description:
-    "High-performance solar solutions for homes, businesses and industries. Built for a sustainable future.",
+    "High-performance TAEKMO N-type solar panels and complete solar solutions for homes, businesses, and utility projects. Built for a sustainable future.",
   primaryCta: { label: "Explore Products", href: "/products#all-products" },
   secondaryCta: { label: "Watch Video", href: "/#story" },
 } as const;

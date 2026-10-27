@@ -1,6 +1,13 @@
 "use client";
 
-import { FormEvent, useId, useLayoutEffect, useRef, useState } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -40,7 +47,8 @@ export function ProductVerificationForm({ className }: { className?: string }) {
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const [barcode, setBarcode] = useState("");
-  const [captchaCode, setCaptchaCode] = useState(() => createCaptchaCode());
+  // Defer Math.random() to client effect — Next 16 blocks random during prerender.
+  const [captchaCode, setCaptchaCode] = useState("");
   const [captchaInput, setCaptchaInput] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{
     barcode?: string;
@@ -48,7 +56,11 @@ export function ProductVerificationForm({ className }: { className?: string }) {
   }>({});
   const [status, setStatus] = useState<"idle" | "loading">("idle");
 
-  const captchaPattern = captchaNoise(captchaCode);
+  const captchaPattern = captchaCode ? captchaNoise(captchaCode) : [];
+
+  useEffect(() => {
+    setCaptchaCode(createCaptchaCode());
+  }, []);
 
   // Next.js Activity keeps /verify mounted while hidden. Always clear on hide
   // so returning (back button or "Verify another") shows an empty form.

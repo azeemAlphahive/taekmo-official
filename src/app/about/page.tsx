@@ -4,12 +4,15 @@ import { WhoWeAre } from "@/components/about/WhoWeAre";
 import { PriorityMarkets } from "@/components/about/PriorityMarkets";
 import { Partners } from "@/components/home/Partners";
 import { aboutPage } from "@/data/solutions";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About",
+export const metadata: Metadata = buildPageMetadata({
+  title: "About TAEKMO Solar | Talesun International Brand",
   description:
-    "TAEKMO — international sub-brand of Talesun Solar under the C&D Group. N-type modules for Middle East, Africa, South America, and Asia.",
-};
+    "Learn about TAEKMO — the international solar brand of Talesun Solar under the C&D Group. Discover our N-type module focus across Middle East, Africa, South America, and Asia.",
+  path: "/about",
+  keywords: ["about TAEKMO", "Talesun TAEKMO", "C&D Group solar"],
+});
 
 export default function AboutPage() {
   const { hero } = aboutPage;

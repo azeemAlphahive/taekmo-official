@@ -4,10 +4,15 @@ import { PageHero } from "@/components/layout/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { siteConfig } from "@/data/content";
 
-export const metadata: Metadata = {
-  title: "Contact Us",
-  description: "Contact TAEKMO for product inquiries, projects, and support.",
-};
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Contact TAEKMO Solar | Sales & Support",
+  description:
+    "Contact TAEKMO Solar for product inquiries, project support, and partnership. Reach the official TAEKMO sales team for modules and solutions.",
+  path: "/contact",
+  keywords: ["contact TAEKMO", "TAEKMO sales", "TAEKMO support"],
+});
 
 export default function ContactPage() {
   return (

@@ -1,13 +1,15 @@
-import type { Metadata } from "next";
 import { Zap, Cpu, ShieldCheck, Leaf } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/Button";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Technology",
+export const metadata = buildPageMetadata({
+  title: "TAEKMO Solar Technology | N-Type Modules & Innovation",
   description:
-    "Learn about TAEKMO solar module, inverter, and storage technology.",
-};
+    "Explore TAEKMO solar technology — high-efficiency N-type modules, smart power conversion, quality systems, and sustainable energy engineering.",
+  path: "/technology",
+  keywords: ["TAEKMO technology", "N-type solar technology", "TAEKMO innovation"],
+});
 
 const pillars = [
   {
