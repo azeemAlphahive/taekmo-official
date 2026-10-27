@@ -61,14 +61,14 @@ export function renderEmailLayout(options: {
       <td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e2e8e0;">
           <tr>
-            <td align="center" style="background-color:#101217;padding:28px 24px;text-align:center;">
-              <a href="${siteUrl}" style="text-decoration:none;display:inline-block;">
+            <td align="center" bgcolor="#101217" style="background-color:#101217;padding:16px 20px;text-align:center;">
+              <a href="${siteUrl}" style="text-decoration:none;display:inline-block;background-color:#101217;">
                 <img
                   src="${logoUrl}"
                   alt="TAEKMO"
-                  width="260"
-                  height="87"
-                  style="display:block;margin:0 auto;width:260px;max-width:78%;height:auto;border:0;outline:none;"
+                  width="280"
+                  height="103"
+                  style="display:block;margin:0 auto;width:280px;max-width:82%;height:auto;border:0;outline:none;background-color:#101217;"
                 />
               </a>
             </td>
