@@ -8,11 +8,12 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/data/content";
 import { cn } from "@/lib/utils";
 
-const APP_DOWNLOAD_URL =
+/** Stable landing page — QR opens /app, which links the latest Android APK. */
+const APP_PAGE_URL =
   process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL ?? `${siteConfig.url}/app`;
 
 function qrSrc(size: number) {
-  return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&margin=8&data=${encodeURIComponent(APP_DOWNLOAD_URL)}`;
+  return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&margin=8&data=${encodeURIComponent(APP_PAGE_URL)}`;
 }
 
 interface AppDownloadButtonProps {
@@ -106,15 +107,15 @@ export function AppDownloadButton({
             />
           </div>
           <p className="mt-2.5 text-center text-[11px] font-medium leading-snug text-white/80">
-            Scan barcode to download
+            Scan to open the app download page
           </p>
           <a
-            href={APP_DOWNLOAD_URL}
+            href={APP_PAGE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 block text-center text-[11px] font-semibold text-brand-mint transition-colors hover:text-white"
           >
-            Or open download link
+            Or open download page
           </a>
         </motion.div>
       )}
