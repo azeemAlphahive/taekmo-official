@@ -338,7 +338,7 @@ function buildDetail(
       { label: "Operating Temperature", value: "−40°C to +85°C" },
       {
         label: "Reference",
-        value: `https://www.taekmosolar.com/products/${mod.officialPath}`,
+        value: `https://taekmo-official.com/products/${mod.officialPath}`,
       },
     ],
     warranty: [

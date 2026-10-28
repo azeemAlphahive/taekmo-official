@@ -1,15 +1,14 @@
 /**
- * Website URL loaded inside the app WebView.
- * Override locally with EXPO_PUBLIC_WEB_URL (e.g. http://192.168.x.x:3000 for device testing).
+ * Same backend as the Next.js website.
+ * Override for local: EXPO_PUBLIC_API_URL=http://192.168.x.x:3000
  */
-export const WEB_URL = (
-  process.env.EXPO_PUBLIC_WEB_URL || "https://www.taekmosolar.com"
+export const API_URL = (
+  process.env.EXPO_PUBLIC_API_URL ||
+  process.env.EXPO_PUBLIC_WEB_URL ||
+  "https://taekmo-official.com"
 ).replace(/\/$/, "");
 
-export const BRAND = {
-  name: "TAEKMO Solar",
-  ink: "#101217",
-  green: "#099c2d",
-  mint: "#6ef74d",
-  white: "#ffffff",
-} as const;
+export function assetUrl(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${API_URL}${p}`;
+}

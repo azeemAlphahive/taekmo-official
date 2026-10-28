@@ -47,6 +47,7 @@ export const metadata: Metadata = {
   // Icons live in /public only — avoid app/icon.png metadata routes (Turbopack refresh loop on Next 16).
   icons: {
     icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
       { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },

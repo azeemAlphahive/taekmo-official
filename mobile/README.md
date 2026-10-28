@@ -1,38 +1,31 @@
-# TAEKMO Solar — Mobile App (iOS & Android)
+# TAEKMO Solar — Native Mobile App
 
-Expo app that loads the official TAEKMO website in a native shell — same UI/content as the web, with splash screen, pull-to-refresh, and Android back navigation.
+Native Expo (React Native) app that mirrors the Next.js website UI — **not a WebView**.
 
-## Run locally
+## Screens
+- Home (hero, stats, featured products, solutions, why TAEKMO)
+- Products + product detail
+- Verify (calls `/api/verify`)
+- Contact + newsletter (calls `/api/contact`, `/api/newsletter`)
+- About / Solutions
+
+## Run
 
 ```bash
 cd mobile
 npm install
-npx expo start
+npx expo start -c
 ```
 
-Then scan the QR code with **Expo Go** (Android) or the Camera app (iOS).
+### iOS Expo Go login
+```bash
+npx expo login --no-browser
+```
+Then sign into Expo Go with the **same** account.
 
-### Point at local Next.js (optional)
-
-1. Run the website: `npm run dev` in the repo root  
-2. Find your PC LAN IP (e.g. `192.168.1.10`)  
-3. In `mobile/.env`:
+### API URL
+Defaults to `https://taekmo-official.com`. For local website APIs:
 
 ```env
-EXPO_PUBLIC_WEB_URL=http://192.168.1.10:3000
+EXPO_PUBLIC_API_URL=http://YOUR_LAN_IP:3000
 ```
-
-4. Restart Expo
-
-Default URL is `https://www.taekmosolar.com`.
-
-## Store builds (EAS)
-
-```bash
-npm i -g eas-cli
-eas login
-eas build -p android
-eas build -p ios
-```
-
-`ios.bundleIdentifier` / `android.package`: `com.taekmosolar.app`

@@ -5,7 +5,7 @@ export const siteConfig = {
   tagline: "Better Energy. A Brighter Future.",
   description:
     "Official TAEKMO Solar website — high-efficiency N-type solar panels, Talesun TAEKMO modules, project solutions, and product authenticity verification for homes, businesses, and utility projects.",
-  url: "https://www.taekmosolar.com",
+  url: "https://taekmo-official.com",
   email: "sales@taekmosolar.com",
   phone: "+92 300 0000000",
   address:

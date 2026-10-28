@@ -37,7 +37,7 @@ export const solutionsPage = {
 } as const;
 
 /**
- * About page — aligned with https://www.taekmosolar.com/about
+ * About page — aligned with https://taekmo-official.com/about
  */
 export const aboutPage = {
   hero: {

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="stem" x1="42" y1="28" x2="58" y2="92" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3dcf6a"/>
+      <stop offset="45%" stop-color="#1fb89a"/>
+      <stop offset="100%" stop-color="#14c4b0"/>
+    </linearGradient>
+    <linearGradient id="fold" x1="38" y1="34" x2="55" y2="78" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6ef74d"/>
+      <stop offset="100%" stop-color="#0d9f78"/>
+    </linearGradient>
+  </defs>
+  <!-- Top bar of stylized TAEKMO T -->
+  <path
+    d="M10 22 L86 18 C90 17.6 93 20.2 93 24.2 L93 33.5 C93 37.2 89.8 40 86 40 L18 42 C12.5 42.3 8 38.2 8 32.8 L8 28 C8 24.4 10.4 22.4 14 22.2 Z"
+    fill="#6ef74d"
+  />
+  <!-- Ribbon / leaf stem -->
+  <path
+    d="M52 38 C58 38 64 42 66 50 C68 60 64 72 58 84 C54 92 48 96 44 92 C40 88 42 78 44 68 C46 58 48 48 52 38 Z"
+    fill="url(#stem)"
+  />
+  <path
+    d="M48 40 C44 48 40 58 38 68 C36 78 38 88 44 92 C40 84 40 72 42 62 C44 52 46 44 48 40 Z"
+    fill="url(#fold)"
+    opacity="0.92"
+  />
+</svg>
