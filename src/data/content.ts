@@ -11,14 +11,14 @@ export const siteConfig = {
   address:
     "No.1 Talesun Road, Shajiabang, Changshu, Suzhou, Jiangsu Province, China 215542",
   /**
-   * Android APK download (EAS preview build).
-   * Update this URL after each new `eas build -p android --profile preview`.
+   * Android APK on GitHub Releases (stable — no site bandwidth load).
+   * After a new EAS build: upload APK to a new release tag and update this URL.
    * Override with NEXT_PUBLIC_ANDROID_APK_URL if needed.
    */
   androidApkUrl:
-    "https://expo.dev/artifacts/eas/15U6sQrBqwlF0-RDI2MuQFjyI0fErEi6F_zPGUE4tY0.apk",
+    "https://github.com/azeemAlphahive/taekmo-official/releases/download/v1.0.0/taekmo-solar.apk",
   androidBuildPageUrl:
-    "https://expo.dev/accounts/azeem7474/projects/taekmo-solar/builds/3329e428-0e3c-4ea6-a0ef-618970febf27",
+    "https://github.com/azeemAlphahive/taekmo-official/releases/tag/v1.0.0",
 } as const;
 
 export const mainNav: NavItem[] = [
