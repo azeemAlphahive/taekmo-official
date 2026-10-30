@@ -265,7 +265,7 @@ export const distributors = [
     role: "Authorized distributor",
     highlight: "Module trading · Township, Lahore",
     logo: "/images/distributors/taimoor-trading-logo.png",
-    logoOnDark: false,
+    logoOnDark: true,
   },
   {
     id: "blaze-solar",

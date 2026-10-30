@@ -24,7 +24,7 @@ export const pakistanDistributors = [
     role: "Authorized distributor",
     logo: "/images/distributors/taimoor-trading-logo.png",
     logoAlt: "Taimoor Trading Company logo",
-    logoOnDark: false,
+    logoOnDark: true,
     highlight: "Module trading · Township, Lahore",
     description:
       "Lahore-based solar trading company serving dealers and EPCs. Publicly associated with major module brands and active across commercial panel supply in Punjab.",
