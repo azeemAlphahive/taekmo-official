@@ -80,18 +80,18 @@ export function Distributors({ className }: { className?: string }) {
               >
                 <div
                   className={cn(
-                    "flex h-14 items-center justify-start sm:h-16",
+                    "flex h-[4.5rem] w-full items-center justify-center sm:h-20",
                     distributor.logoOnDark &&
-                      "rounded-lg bg-brand-ink px-2",
+                      "rounded-xl bg-brand-ink px-3 py-2",
                   )}
                 >
                   <Image
                     src={distributor.logo}
                     alt={distributor.logoAlt}
-                    width={200}
-                    height={72}
+                    width={280}
+                    height={96}
                     unoptimized
-                    className="h-11 w-auto max-w-[170px] object-contain object-left sm:h-12"
+                    className="h-14 w-full max-w-full object-contain object-center sm:h-16"
                   />
                 </div>
 

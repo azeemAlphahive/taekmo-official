@@ -56,20 +56,20 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   logoWrap: {
-    height: 56,
+    height: 76,
     justifyContent: "center",
-    alignItems: "flex-start",
+    alignItems: "center",
     marginBottom: 4,
   },
   logoWrapDark: {
     backgroundColor: colors.ink,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   logo: {
-    width: 160,
-    height: 44,
+    width: "100%",
+    height: 56,
   },
   role: {
     marginTop: 12,
