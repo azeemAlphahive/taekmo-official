@@ -29,11 +29,11 @@ function SalesDirectorCard({
   const reduceMotion = useReducedMotion();
   const lift = !reduceMotion && hovered;
 
-  const telHref = person.phone
-    ? `tel:${person.phone.replace(/\s/g, "")}`
-    : null;
+  const phone = person.phone;
+  const whatsapp = person.whatsapp;
+  const telHref = phone ? `tel:${phone.replace(/\s/g, "")}` : null;
   const mailHref = `mailto:${person.email}`;
-  const waNumber = person.whatsapp || person.phone;
+  const waNumber = whatsapp || phone || null;
   const waHref = waNumber
     ? `https://wa.me/${waNumber.replace(/\D/g, "")}`
     : null;
@@ -110,7 +110,7 @@ function SalesDirectorCard({
               <span>{person.email}</span>
             </a>
           </li>
-          {telHref && person.phone ? (
+          {telHref && phone ? (
             <li>
               <a
                 href={telHref}
@@ -120,7 +120,7 @@ function SalesDirectorCard({
                   className="h-3 w-3 shrink-0 text-brand-green"
                   aria-hidden
                 />
-                {person.phone}
+                {phone}
               </a>
             </li>
           ) : null}
