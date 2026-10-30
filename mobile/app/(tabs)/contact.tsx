@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import { PageHero } from "../../src/components/PageHero";
 import { Reveal, emitAppScroll } from "../../src/components/Reveal";
@@ -17,7 +18,9 @@ import {
   Screen,
 } from "../../src/components/ui";
 import { sendContact } from "../../src/api";
-import { pakistanCountryHead, siteConfig } from "../../src/data/content";
+import { SalesDirectorModal } from "../../src/components/SalesDirectorModal";
+import { salesLeadership, siteConfig } from "../../src/data/content";
+import { assetSource } from "../../src/config";
 import { useScrollToTopOnFocus } from "../../src/hooks/useScrollToTopOnFocus";
 import { useTheme } from "../../src/theme-context";
 import { spacing } from "../../src/theme";
@@ -32,6 +35,9 @@ export default function ContactScreen() {
   const [company, setCompany] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedDirector, setSelectedDirector] = useState<
+    (typeof salesLeadership)[number] | null
+  >(null);
 
   async function onSend() {
     if (!name.trim() || !email.trim() || !message.trim()) {
@@ -166,47 +172,63 @@ export default function ContactScreen() {
             </View>
           </Reveal>
 
-          <Reveal
-            delay={40}
-            style={[
-              styles.card,
-              {
-                backgroundColor: t.surface,
-                borderColor: t.border,
-              },
-            ]}
-          >
-            <View style={styles.cardHead}>
-              <View
-                style={[
-                  styles.badge,
-                  { backgroundColor: "rgba(9,156,45,0.12)" },
+          <Text style={[styles.teamHeading, { color: t.text }]}>
+            Meet our team
+          </Text>
+          {salesLeadership.map((person, i) => (
+            <Reveal key={person.id} delay={40 + i * 20}>
+              <Pressable
+                onPress={() => setSelectedDirector(person)}
+                style={({ pressed }) => [
+                  styles.card,
+                  styles.profileCard,
+                  {
+                    backgroundColor: t.surface,
+                    borderColor: t.border,
+                    opacity: pressed ? 0.92 : 1,
+                    transform: [{ scale: pressed ? 0.985 : 1 }],
+                  },
                 ]}
               >
-                <Text style={[styles.badgeText, { color: t.green }]}>
-                  Pakistan
-                </Text>
-              </View>
-            </View>
-            <Text style={[styles.cardTitle, { color: t.text }]}>
-              {pakistanCountryHead.title}
-            </Text>
-            <Text style={[styles.headName, { color: t.green }]}>
-              {pakistanCountryHead.name}
-            </Text>
-            <Text style={[styles.body, { color: t.textSecondary }]}>
-              {pakistanCountryHead.message}
-            </Text>
-            <Pressable
-              onPress={() =>
-                void Linking.openURL(`mailto:${pakistanCountryHead.email}`)
-              }
-            >
-              <Text style={[styles.link, { color: t.green }]}>
-                {pakistanCountryHead.email}
-              </Text>
-            </Pressable>
-          </Reveal>
+                <Image
+                  source={assetSource(person.photo)}
+                  style={styles.profilePhoto}
+                  contentFit="cover"
+                  contentPosition={person.photoPosition ?? "top"}
+                />
+                <View style={styles.profileBody}>
+                  <Text style={[styles.headName, { color: t.text }]}>
+                    {person.name}
+                  </Text>
+                  <Text style={[styles.profileTitle, { color: t.green }]}>
+                    {person.title}
+                  </Text>
+                  <Text
+                    style={[styles.body, { color: t.textSecondary }]}
+                    numberOfLines={4}
+                  >
+                    {person.message}
+                  </Text>
+                  <View style={styles.profileFooter}>
+                    <Text style={[styles.tapHint, { color: t.green }]}>
+                      Tap for full details
+                    </Text>
+                    <Ionicons
+                      name="chevron-forward"
+                      size={16}
+                      color={t.green}
+                    />
+                  </View>
+                </View>
+              </Pressable>
+            </Reveal>
+          ))}
+
+          <SalesDirectorModal
+            person={selectedDirector}
+            visible={!!selectedDirector}
+            onClose={() => setSelectedDirector(null)}
+          />
 
           <Reveal
             delay={60}
@@ -271,7 +293,14 @@ export default function ContactScreen() {
 const styles = StyleSheet.create({
   content: {
     padding: spacing.lg,
-    paddingBottom: 120,
+    paddingBottom: 140,
+  },
+  teamHeading: {
+    marginTop: 8,
+    marginBottom: 2,
+    fontSize: 20,
+    fontWeight: "800",
+    letterSpacing: -0.3,
   },
   h2: {
     fontSize: 22,
@@ -338,6 +367,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 18,
   },
+  profileCard: {
+    padding: 0,
+    overflow: "hidden",
+    flexDirection: "row",
+    alignItems: "stretch",
+  },
+  profilePhoto: {
+    width: 140,
+    height: 210,
+  },
+  profileBody: {
+    flex: 1,
+    paddingVertical: 14,
+    paddingHorizontal: 12,
+    justifyContent: "center",
+  },
   cardHead: {
     marginBottom: 8,
   },
@@ -346,6 +391,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingHorizontal: 10,
     paddingVertical: 4,
+    marginBottom: 10,
   },
   badgeText: {
     fontSize: 11,
@@ -357,6 +403,11 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginBottom: 6,
   },
+  profileTitle: {
+    fontWeight: "700",
+    fontSize: 13,
+    marginBottom: 8,
+  },
   formHint: {
     fontSize: 12,
     marginBottom: 14,
@@ -364,8 +415,8 @@ const styles = StyleSheet.create({
   },
   headName: {
     fontWeight: "800",
-    fontSize: 15,
-    marginBottom: 8,
+    fontSize: 18,
+    marginBottom: 4,
   },
   body: {
     fontSize: 13,
@@ -373,7 +424,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   link: {
-    fontSize: 13,
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  profileFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  tapHint: {
+    fontSize: 12,
     fontWeight: "700",
   },
   twoCol: {

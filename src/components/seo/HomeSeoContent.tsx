@@ -1,4 +1,32 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const links = [
+  {
+    title: "TAEKMO solar panels",
+    body: "Bankable N-type modules for rooftop, C&I, and utility projects.",
+    href: "/products",
+  },
+  {
+    title: "TAEKMO solutions",
+    body: "System approaches for homes, businesses, and large solar plants.",
+    href: "/solutions",
+  },
+  {
+    title: "Verify TAEKMO modules",
+    body: "Check authenticity with your module Product No. or barcode.",
+    href: "/verify",
+  },
+  {
+    title: "Contact TAEKMO",
+    body: "Talk to sales for supply, specs, and regional partnership.",
+    href: "/contact",
+  },
+] as const;
+
+const cardMotion =
+  "will-change-transform transition-[transform,box-shadow,border-color,background-color] duration-[1200ms] [transition-timing-function:cubic-bezier(0.33,1,0.32,1)] motion-safe:hover:-translate-y-2 motion-safe:hover:shadow-[0_24px_44px_-16px_rgba(4,16,10,0.22)]";
 
 /**
  * Indexable brand + product copy for “TAEKMO” search intent.
@@ -7,7 +35,7 @@ import Link from "next/link";
 export function HomeSeoContent() {
   return (
     <section
-      className="border-t border-brand-border bg-[#f7faf7] py-14 sm:py-16 lg:py-20"
+      className="bg-[#f4f7f5] py-14 sm:py-16 lg:py-20"
       aria-labelledby="about-taekmo-seo-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -46,36 +74,27 @@ export function HomeSeoContent() {
           </p>
         </div>
 
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              title: "TAEKMO solar panels",
-              body: "Bankable N-type modules for rooftop, C&I, and utility projects.",
-              href: "/products",
-            },
-            {
-              title: "TAEKMO solutions",
-              body: "System approaches for homes, businesses, and large solar plants.",
-              href: "/solutions",
-            },
-            {
-              title: "Verify TAEKMO modules",
-              body: "Check authenticity with your module Product No. or barcode.",
-              href: "/verify",
-            },
-            {
-              title: "Contact TAEKMO",
-              body: "Talk to sales for supply, specs, and regional partnership.",
-              href: "/contact",
-            },
-          ].map((item) => (
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+          {links.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="block h-full rounded-xl border border-brand-border bg-white p-5 transition-colors hover:border-brand-green/40"
+                className={cn(
+                  "group flex h-full flex-col rounded-2xl border border-brand-border bg-white p-5 sm:p-6",
+                  "hover:border-brand-green/30",
+                  cardMotion,
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 focus-visible:ring-offset-[#f4f7f5]",
+                )}
               >
-                <h3 className="text-sm font-bold text-brand-ink">{item.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-brand-muted sm:text-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-sm font-bold tracking-tight text-brand-ink transition-colors duration-300 group-hover:text-brand-green sm:text-[15px]">
+                    {item.title}
+                  </h3>
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-green/10 text-brand-green transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.32,1)] motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5">
+                    <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                  </span>
+                </div>
+                <p className="mt-3 text-xs leading-relaxed text-brand-muted sm:text-sm">
                   {item.body}
                 </p>
               </Link>

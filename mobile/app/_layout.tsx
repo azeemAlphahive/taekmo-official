@@ -22,6 +22,9 @@ function RootNavigator() {
         <Stack.Screen name="about" />
         <Stack.Screen name="solutions" />
         <Stack.Screen name="technology" />
+        <Stack.Screen name="privacy" />
+        <Stack.Screen name="terms" />
+        <Stack.Screen name="disclaimer" />
         <Stack.Screen name="product/[slug]" />
         <Stack.Screen name="verify/result" />
       </Stack>

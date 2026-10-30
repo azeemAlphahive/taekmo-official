@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { Boxes, Earth, Star, Trophy } from "lucide-react";
-import { useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 const items: Array<{
   value: string;
@@ -13,22 +13,22 @@ const items: Array<{
   {
     value: "25+",
     label: "Years of Experience",
-    icon: <Trophy className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.6} />,
+    icon: <Trophy className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.6} />,
   },
   {
     value: "1M+",
     label: "Products Delivered",
-    icon: <Boxes className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.6} />,
+    icon: <Boxes className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.6} />,
   },
   {
     value: "50+",
     label: "Countries",
-    icon: <Earth className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.6} />,
+    icon: <Earth className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.6} />,
   },
   {
     value: "99.8%",
     label: "Customer Satisfaction",
-    icon: <Star className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.6} />,
+    icon: <Star className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.6} />,
   },
 ];
 
@@ -99,46 +99,62 @@ function CountUpValue({
 
 export function Stats() {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const inView = useInView(ref, { once: true, amount: 0.35 });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
       ref={ref}
-      className="bg-[#f4f7f5] pt-2 pb-8 sm:pb-10"
+      className="bg-white py-10 sm:py-12 lg:py-14"
       aria-label="Company highlights"
     >
-      <ul className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-y-0 px-4 sm:grid-cols-2 sm:px-6 md:grid-cols-4 lg:px-8">
-        {items.map((item, index) => (
-          <li
-            key={item.label}
-            className="relative flex min-w-0 max-w-full items-center gap-3 overflow-hidden px-2 py-4 sm:justify-center sm:gap-4 sm:px-5 sm:py-6"
-          >
-            {index > 0 && (
-              <span
-                className="absolute top-1/2 left-0 hidden h-12 w-px -translate-y-1/2 bg-black/10 md:block"
-                aria-hidden
-              />
-            )}
-            {index % 2 === 1 && (
-              <span
-                className="absolute top-1/2 left-0 hidden h-12 w-px -translate-y-1/2 bg-black/10 sm:block md:hidden"
-                aria-hidden
-              />
-            )}
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#099c2d]/10 text-[#099c2d] sm:h-14 sm:w-14">
-              {item.icon}
-            </span>
-            <div className="min-w-0 flex-1 overflow-hidden">
-              <p className="truncate text-2xl font-bold tracking-tight text-[#04100a] sm:text-3xl lg:text-[2.1rem]">
-                <CountUpValue value={item.value} active={inView} />
-              </p>
-              <p className="mt-1 text-xs leading-snug break-words text-[#5c6670] sm:text-sm">
-                {item.label}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ul className="grid grid-cols-1 overflow-hidden rounded-2xl border border-brand-border bg-[#f4f7f5] sm:grid-cols-2 md:grid-cols-4">
+          {items.map((item, index) => (
+            <motion.li
+              key={item.label}
+              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+              animate={inView ? { opacity: 1, y: 0 } : undefined}
+              transition={{
+                duration: 0.45,
+                delay: reduceMotion ? 0 : index * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="group relative flex min-w-0 items-center gap-3.5 px-5 py-6 sm:justify-center sm:gap-4 sm:px-6 sm:py-8"
+            >
+              {index > 0 && (
+                <span
+                  className="absolute top-1/2 left-0 hidden h-12 w-px -translate-y-1/2 bg-brand-border md:block"
+                  aria-hidden
+                />
+              )}
+              {index % 2 === 1 && (
+                <span
+                  className="absolute top-1/2 left-0 hidden h-12 w-px -translate-y-1/2 bg-brand-border sm:block md:hidden"
+                  aria-hidden
+                />
+              )}
+              {index > 0 && (
+                <span
+                  className="absolute inset-x-5 top-0 h-px bg-brand-border sm:hidden"
+                  aria-hidden
+                />
+              )}
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-green/10 text-brand-green transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.32,1)] motion-safe:group-hover:scale-105 sm:h-12 sm:w-12">
+                {item.icon}
+              </span>
+              <div className="min-w-0 flex-1 sm:flex-initial">
+                <p className="text-2xl font-bold tracking-tight text-brand-ink sm:text-[1.75rem] lg:text-[2rem]">
+                  <CountUpValue value={item.value} active={inView} />
+                </p>
+                <p className="mt-1 text-xs leading-snug text-brand-muted sm:text-[13px]">
+                  {item.label}
+                </p>
+              </div>
+            </motion.li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

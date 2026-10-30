@@ -28,13 +28,13 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Stats />
+      <Partners />
+      <Distributors />
       <ProductRange />
+      <Stats />
       <Solutions />
       <WhyChoose />
       <LatestInsights />
-      <Partners />
-      <Distributors />
       <HomeSeoContent />
       <HomeBottomBand />
     </>

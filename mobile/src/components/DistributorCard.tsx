@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
-import { assetUrl } from "../config";
+import { assetSource } from "../config";
 import { colors } from "../theme";
 
 export function DistributorCard({
@@ -11,6 +11,7 @@ export function DistributorCard({
   highlight,
   logo,
   logoOnDark,
+  compact,
 }: {
   name: string;
   shortName: string;
@@ -19,13 +20,20 @@ export function DistributorCard({
   highlight: string;
   logo: string;
   logoOnDark?: boolean;
+  compact?: boolean;
 }) {
   return (
-    <View style={styles.card}>
-      <View style={[styles.logoWrap, logoOnDark && styles.logoWrapDark]}>
+    <View style={[styles.card, compact && styles.cardCompact]}>
+      <View
+        style={[
+          styles.logoWrap,
+          compact && styles.logoWrapCompact,
+          logoOnDark && styles.logoWrapDark,
+        ]}
+      >
         <Image
-          source={{ uri: assetUrl(logo) }}
-          style={styles.logo}
+          source={assetSource(logo)}
+          style={[styles.logo, compact && styles.logoCompact]}
           contentFit="contain"
         />
       </View>
@@ -34,9 +42,18 @@ export function DistributorCard({
         <Text style={styles.dot}> · </Text>
         {location}
       </Text>
-      <Text style={styles.shortName}>{shortName}</Text>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.highlight}>{highlight}</Text>
+      <Text style={[styles.shortName, compact && styles.shortNameCompact]}>
+        {shortName}
+      </Text>
+      <Text style={styles.name} numberOfLines={compact ? 1 : undefined}>
+        {name}
+      </Text>
+      <Text
+        style={[styles.highlight, compact && styles.highlightCompact]}
+        numberOfLines={compact ? 3 : undefined}
+      >
+        {highlight}
+      </Text>
     </View>
   );
 }
@@ -44,16 +61,15 @@ export function DistributorCard({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.white,
-    borderRadius: 14,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.border,
     padding: 16,
     marginBottom: 12,
-    shadowColor: "#04100a",
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
+  },
+  cardCompact: {
+    marginBottom: 0,
+    height: 260,
   },
   logoWrap: {
     height: 76,
@@ -61,14 +77,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 4,
   },
+  logoWrapCompact: {
+    height: 72,
+  },
   logoWrapDark: {
     backgroundColor: colors.ink,
     borderRadius: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
   },
   logo: {
     width: "100%",
+    height: 64,
+  },
+  logoCompact: {
     height: 56,
   },
   role: {
@@ -88,6 +110,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "800",
   },
+  shortNameCompact: {
+    fontSize: 16,
+  },
   name: {
     marginTop: 2,
     color: colors.muted,
@@ -98,5 +123,10 @@ const styles = StyleSheet.create({
     color: colors.muted,
     fontSize: 13,
     lineHeight: 19,
+  },
+  highlightCompact: {
+    marginTop: 8,
+    fontSize: 12,
+    lineHeight: 17,
   },
 });

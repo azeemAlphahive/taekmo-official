@@ -21,7 +21,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative isolate w-full overflow-hidden bg-[#04100a] text-white min-h-[36rem] sm:min-h-[42rem] lg:h-dvh lg:min-h-0"
+      className="relative isolate w-full overflow-hidden bg-white text-white min-h-[36rem] sm:min-h-[42rem] lg:h-dvh lg:min-h-0"
       aria-labelledby="hero-heading"
     >
       <Image
@@ -43,8 +43,8 @@ export function Hero() {
         aria-hidden
       />
 
-      <div className="relative z-20 mx-auto box-border flex h-full w-full max-w-7xl flex-col px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-24 lg:px-8 lg:pt-[100px] lg:pb-24">
-        <div className="flex w-full min-w-0 flex-col gap-5 pt-2 sm:gap-8 sm:pt-0 lg:max-w-[54%] lg:flex-1 lg:justify-start lg:gap-0 lg:pt-2 lg:pb-20">
+      <div className="relative z-20 mx-auto box-border flex h-full w-full max-w-7xl flex-col px-4 pt-20 pb-6 sm:px-6 sm:pt-24 sm:pb-8 lg:px-8 lg:pt-[100px] lg:pb-10">
+        <div className="flex w-full min-w-0 flex-col gap-5 pt-2 sm:gap-8 sm:pt-0 lg:max-w-[54%] lg:flex-1 lg:justify-start lg:gap-0 lg:pt-2 lg:pb-6">
           <div className="flex w-full min-w-0 flex-col">
             <motion.p
               {...fade(0.05)}
@@ -104,7 +104,7 @@ export function Hero() {
         </div>
       </div>
 
-      <WaveDivider color="#f4f7f5" />
+      <WaveDivider color="#ffffff" />
     </section>
   );
 }

@@ -32,7 +32,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-brand-border bg-white shadow-sm",
+        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-brand-border bg-[#f4f7f5] shadow-sm",
         "will-change-transform transition-[transform,box-shadow] duration-[1800ms] [transition-timing-function:cubic-bezier(0.33,1,0.32,1)]",
         "motion-safe:hover:-translate-y-5 motion-safe:hover:shadow-[0_32px_56px_-18px_rgba(4,16,10,0.38)]",
         "motion-safe:focus-within:-translate-y-5 motion-safe:focus-within:shadow-[0_32px_56px_-18px_rgba(4,16,10,0.38)]",

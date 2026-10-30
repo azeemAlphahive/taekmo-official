@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { CountryHeadMessage } from "@/components/contact/CountryHeadMessage";
 import { siteConfig } from "@/data/content";
 
 import { buildPageMetadata } from "@/lib/seo";
@@ -22,6 +23,8 @@ export default function ContactPage() {
         title="Contact Us"
         description="Tell us about your project or product needs. We will get back to you soon."
       />
+
+      <CountryHeadMessage />
 
       <section
         id="contact"

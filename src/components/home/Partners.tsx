@@ -13,7 +13,7 @@ interface PartnersProps {
 }
 
 const cardMotion =
-  "will-change-transform transition-[transform,box-shadow] duration-[1200ms] [transition-timing-function:cubic-bezier(0.33,1,0.32,1)] motion-safe:hover:-translate-y-2 motion-safe:hover:shadow-[0_24px_44px_-16px_rgba(4,16,10,0.22)]";
+  "will-change-transform transition-[transform,box-shadow,background-color,border-color] duration-[1200ms] [transition-timing-function:cubic-bezier(0.33,1,0.32,1)] motion-safe:hover:-translate-y-2 motion-safe:hover:shadow-[0_24px_44px_-16px_rgba(4,16,10,0.22)]";
 
 export function Partners({
   className,
@@ -26,8 +26,7 @@ export function Partners({
     <section
       id="partners"
       className={cn(
-        "scroll-mt-24 overflow-hidden py-14 sm:py-16 lg:py-20",
-        isFull ? "bg-[#f4f7f5]" : "bg-white",
+        "relative z-10 scroll-mt-24 overflow-hidden bg-white pt-4 pb-12 sm:pt-5 sm:pb-14 lg:pt-6 lg:pb-16",
         className,
       )}
       aria-labelledby="partners-heading"
@@ -52,7 +51,7 @@ export function Partners({
         </SectionReveal>
 
         <motion.ul
-          className="mt-10 grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 md:gap-6"
+          className="mt-5 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-5 md:grid-cols-2 md:gap-6"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
@@ -88,33 +87,36 @@ export function Partners({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "flex h-full flex-col rounded-xl border border-brand-border bg-white p-5 shadow-sm sm:p-6 lg:p-7",
+                  "group flex h-full flex-col rounded-2xl border border-brand-border bg-[#f4f7f5] p-5 sm:p-6 lg:p-7",
                   cardMotion,
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
+                  "hover:border-brand-green/25 hover:bg-[#eef2ef]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 focus-visible:ring-offset-white",
                 )}
               >
-                <div className="flex h-14 items-center sm:h-16">
+                <div className="flex h-16 items-center sm:h-[4.5rem]">
                   <Image
                     src={partner.logo}
                     alt={partner.logoAlt}
-                    width={180}
-                    height={64}
-                    className="h-full w-auto max-w-[180px] object-contain object-left"
+                    width={200}
+                    height={72}
+                    className="h-12 w-auto max-w-[200px] object-contain object-left sm:h-14"
                   />
                 </div>
 
-                <p className="mt-4 text-[10px] font-semibold tracking-[0.16em] text-brand-green uppercase">
-                  {partner.role}
-                  <span className="text-brand-green/45"> · </span>
-                  {partner.credential}
-                </p>
-                <h3 className="mt-2 text-lg font-bold tracking-tight text-brand-ink sm:text-xl">
-                  {partner.shortName}
-                </h3>
-                <p className="mt-0.5 text-sm text-brand-muted">{partner.name}</p>
-                <p className="mt-3 text-sm leading-relaxed text-brand-muted">
-                  {isFull ? partner.description : partner.highlight}
-                </p>
+                <div className="mt-5 border-t border-brand-border pt-4 transition-colors group-hover:border-[#d5ddd6]">
+                  <p className="text-[10px] font-semibold tracking-[0.16em] text-brand-green uppercase">
+                    {partner.role}
+                    <span className="text-brand-green/45"> · </span>
+                    {partner.credential}
+                  </p>
+                  <h3 className="mt-2 text-lg font-bold tracking-tight text-brand-ink sm:text-xl">
+                    {partner.shortName}
+                  </h3>
+                  <p className="mt-0.5 text-sm text-brand-muted">{partner.name}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-brand-muted">
+                    {isFull ? partner.description : partner.highlight}
+                  </p>
+                </div>
               </a>
             </motion.li>
           ))}

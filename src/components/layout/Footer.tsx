@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { ArrowRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { footerColumns, siteConfig } from "@/data/content";
+import { legalNav } from "@/data/legal";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -144,24 +145,19 @@ export function Footer() {
             © 2026 {siteConfig.name}. All rights reserved.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link
-              href="#privacy"
-              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="#terms"
-              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
-            >
-              Terms &amp; Conditions
-            </Link>
+            {legalNav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
         <span id="technology" className="sr-only" aria-hidden="true" />
         <span id="projects" className="sr-only" aria-hidden="true" />
-        <span id="privacy" className="sr-only" aria-hidden="true" />
-        <span id="terms" className="sr-only" aria-hidden="true" />
       </div>
     </footer>
   );

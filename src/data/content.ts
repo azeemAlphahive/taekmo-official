@@ -6,8 +6,8 @@ export const siteConfig = {
   description:
     "Official TAEKMO Solar website — high-efficiency N-type solar panels, Talesun TAEKMO modules, project solutions, and product authenticity verification for homes, businesses, and utility projects.",
   url: "https://taekmo-official.com",
-  email: "sales@taekmosolar.com",
-  phone: "+92 300 0000000",
+  email: "Nibrass.zaman@talesun.com",
+  phone: "+92 323 3336633",
   address:
     "No.1 Talesun Road, Shajiabang, Changshu, Suzhou, Jiangsu Province, China 215542",
   /**
@@ -16,9 +16,9 @@ export const siteConfig = {
    * Override with NEXT_PUBLIC_ANDROID_APK_URL if needed.
    */
   androidApkUrl:
-    "https://github.com/azeemAlphahive/taekmo-official/releases/download/v1.0.0/taekmo-solar.apk",
+    "https://github.com/azeemAlphahive/taekmo-official/releases/download/v1.0.1/taekmo-solar.apk",
   androidBuildPageUrl:
-    "https://github.com/azeemAlphahive/taekmo-official/releases/tag/v1.0.0",
+    "https://github.com/azeemAlphahive/taekmo-official/releases/tag/v1.0.1",
 } as const;
 
 export const mainNav: NavItem[] = [
@@ -123,8 +123,8 @@ export const footerColumns: FooterColumn[] = [
       { label: "About TAEKMO", href: "/about" },
       { label: "Partners", href: "/#partners" },
       { label: "Distributors", href: "/#distributors" },
-      { label: "Projects", href: "/projects" },
-      { label: "Support", href: "/support" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms & Conditions", href: "/terms" },
     ],
   },
 ];
@@ -145,14 +145,37 @@ export const verificationContent = {
   placeholder: "e.g. 2604D72F2882009720",
 } as const;
 
-/** Pakistan country leadership — shown on Contact. Update details as confirmed. */
-export const pakistanCountryHead = {
-  name: "Sophia",
-  title: "Country Head — Pakistan",
-  region: "Pakistan",
-  message:
-    "TAEKMO is committed to bringing bankable, high-efficiency N-type modules to Pakistan’s residential, C&I, and utility projects. Whether you are specifying a rooftop or a large-scale plant, our local team is here to support product selection, supply, and long-term partnership.",
-  email: "sophia@taekmosolar.com",
-  phone: "+92 300 0000000",
-  whatsapp: "+923000000000",
-} as const;
+/** TAEKMO / Talesun sales leadership — shown on Contact. */
+export const salesLeadership = [
+  {
+    id: "nibrass-zaman",
+    name: "Nibrass Zaman",
+    title: "Country Head, Pakistan",
+    region: "TAEKMO",
+    photo: "/images/team/nibrass-zaman.jpg",
+    photoAlt: "Nibrass Zaman, Country Head, Pakistan",
+    photoPosition: "object-top",
+    message:
+      "Leads TAEKMO as Country Head, Pakistan — building distributor partnerships, project supply pipelines, and long-term channel growth for residential, C&I, and utility buyers.",
+    email: "Nibrass.zaman@talesun.com",
+    phone: "+92 323 3336633",
+    whatsapp: "+923233336633",
+  },
+  {
+    id: "sofia-li",
+    name: "Sofia.Li",
+    title: "Sales Director, Pakistan",
+    region: "TAEKMO",
+    photo: "/images/team/sofia-li.jpg",
+    photoAlt: "Sofia.Li, Sales Director, Pakistan",
+    photoPosition: "object-top",
+    message:
+      "Drives TAEKMO sales in Pakistan as Sales Director — partner onboarding, commercial support, and reliable follow-through from inquiry through delivery for Talesun / TAEKMO modules.",
+    email: "sofia.li@talesun.com",
+    phone: "+92 310 331 6666",
+    whatsapp: "+923103316666",
+  },
+] as const;
+
+/** @deprecated Prefer salesLeadership — kept for mobile imports during transition. */
+export const pakistanCountryHead = salesLeadership[0];

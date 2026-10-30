@@ -55,6 +55,27 @@ const links = [
   },
 ];
 
+const legalLinks = [
+  {
+    title: "Privacy Policy",
+    subtitle: "How we collect and use your data",
+    href: "/privacy",
+    icon: "shield-outline" as const,
+  },
+  {
+    title: "Terms & Conditions",
+    subtitle: "Rules for using the website and app",
+    href: "/terms",
+    icon: "document-text-outline" as const,
+  },
+  {
+    title: "Disclaimer",
+    subtitle: "Product info and warranty notices",
+    href: "/disclaimer",
+    icon: "alert-circle-outline" as const,
+  },
+];
+
 export default function MoreScreen() {
   const insets = useSafeAreaInsets();
   const { colors: t } = useTheme();
@@ -177,6 +198,43 @@ export default function MoreScreen() {
                 size={18}
                 color={t.muted}
               />
+            </Pressable>
+          </FadeIn>
+        ))}
+
+        <Text style={[styles.sectionLabel, { color: t.muted, marginTop: 14 }]}>
+          Legal
+        </Text>
+
+        {legalLinks.map((item, i) => (
+          <FadeIn key={item.href} delay={80 + i * 35}>
+            <Pressable
+              style={[
+                styles.row,
+                {
+                  backgroundColor: t.surface,
+                  borderColor: t.border,
+                },
+              ]}
+              onPress={() => onPress(item.href)}
+            >
+              <View
+                style={[
+                  styles.iconWrap,
+                  { backgroundColor: "rgba(9,156,45,0.1)" },
+                ]}
+              >
+                <Ionicons name={item.icon} size={20} color={t.green} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.title, { color: t.text }]}>
+                  {item.title}
+                </Text>
+                <Text style={[styles.sub, { color: t.muted }]}>
+                  {item.subtitle}
+                </Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={t.muted} />
             </Pressable>
           </FadeIn>
         ))}

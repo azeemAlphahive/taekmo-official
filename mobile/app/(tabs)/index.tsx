@@ -14,7 +14,8 @@ import { FadeIn } from "../../src/components/FadeIn";
 import { ProductCard } from "../../src/components/ProductCard";
 import { Reveal, emitAppScroll } from "../../src/components/Reveal";
 import { SolutionCard } from "../../src/components/SolutionCard";
-import { DistributorCard } from "../../src/components/DistributorCard";
+import { DistributorCarousel } from "../../src/components/DistributorCarousel";
+import { TeamCarousel } from "../../src/components/TeamCarousel";
 import { NewsletterSection } from "../../src/components/NewsletterSection";
 import { VerificationCard } from "../../src/components/VerificationCard";
 import { PrimaryButton, Screen } from "../../src/components/ui";
@@ -25,6 +26,7 @@ import {
   heroContent,
   insights,
   partners,
+  salesLeadership,
   solutions,
   stats,
 } from "../../src/data/content";
@@ -99,21 +101,66 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <Reveal style={styles.statsSection}>
-          {stats.map((s) => (
-            <View key={s.id} style={styles.statRow}>
-              <View style={styles.statIcon}>
-                <Ionicons name={s.icon} size={22} color={colors.green} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.statValue}>{s.value}</Text>
-                <Text style={styles.statLabel}>{s.label}</Text>
-              </View>
-            </View>
+        <Reveal
+          style={[
+            styles.section,
+            {
+              backgroundColor: colors.white,
+              paddingTop: 28,
+              paddingBottom: 24,
+            },
+          ]}
+        >
+          <Text style={styles.greenEyebrow}>Our partners</Text>
+          <Text style={styles.h2}>Backed by C&D Xiamen and Talesun</Text>
+          <Text style={styles.sub}>
+            TAEKMO stands on a Fortune Global 500 industrial group and a BNEF
+            Tier 1 module manufacturer.
+          </Text>
+          {partners.map((p, i) => (
+            <Reveal key={p.id} delay={i * 50} style={styles.partnerCard}>
+              <Image
+                source={{ uri: assetUrl(p.logo) }}
+                style={styles.partnerLogo}
+                contentFit="contain"
+                contentPosition="left"
+              />
+              <View style={styles.partnerDivider} />
+              <Text style={styles.partnerRole}>
+                {p.role} · {p.credential}
+              </Text>
+              <Text style={styles.partnerName}>{p.shortName}</Text>
+              <Text style={styles.partnerFull}>{p.name}</Text>
+              <Text style={styles.partnerHighlight}>{p.highlight}</Text>
+            </Reveal>
           ))}
         </Reveal>
 
+        <Reveal style={[styles.section, { backgroundColor: colors.page }]}>
+          <Text style={styles.greenEyebrow}>Pakistan network</Text>
+          <Text style={styles.h2}>Our distributors in Pakistan</Text>
+          <Text style={styles.sub}>
+            Authorized local partners for genuine TAEKMO modules — supply,
+            project support, and nationwide reach.
+          </Text>
+        </Reveal>
+        <View style={styles.distributorRail}>
+          <DistributorCarousel items={distributors} />
+        </View>
+
         <Reveal style={[styles.section, { backgroundColor: colors.white }]}>
+          <Text style={styles.greenEyebrow}>TAEKMO · Pakistan</Text>
+          <Text style={styles.h2}>Meet our team</Text>
+          <Text style={styles.sub}>
+            Local leadership for distributor partnerships, sales support, and
+            project follow-through.
+          </Text>
+        </Reveal>
+        <View style={styles.teamRail}>
+          <TeamCarousel items={salesLeadership} />
+        </View>
+
+        <Reveal style={[styles.section, { backgroundColor: colors.page }]}>
           <View style={styles.rowBetween}>
             <View style={{ flex: 1, paddingRight: 12 }}>
               <Text style={styles.h2}>Our Product Range</Text>
@@ -137,6 +184,20 @@ export default function HomeScreen() {
               <ProductCard key={p.slug} product={p} width={cardW} />
             ))}
           </ScrollView>
+        </Reveal>
+
+        <Reveal style={styles.statsSection}>
+          {stats.map((s) => (
+            <View key={s.id} style={styles.statRow}>
+              <View style={styles.statIcon}>
+                <Ionicons name={s.icon} size={22} color={colors.green} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.statValue}>{s.value}</Text>
+                <Text style={styles.statLabel}>{s.label}</Text>
+              </View>
+            </View>
+          ))}
         </Reveal>
 
         <Reveal style={styles.solutionsSection}>
@@ -240,52 +301,6 @@ export default function HomeScreen() {
           ))}
         </Reveal>
 
-        <Reveal style={[styles.section, { backgroundColor: colors.white }]}>
-          <Text style={styles.greenEyebrow}>Our partners</Text>
-          <Text style={styles.h2}>Backed by C&D Xiamen and Talesun</Text>
-          <Text style={styles.sub}>
-            TAEKMO stands on a Fortune Global 500 industrial group and a BNEF
-            Tier 1 module manufacturer.
-          </Text>
-          {partners.map((p, i) => (
-            <Reveal key={p.id} delay={i * 50} style={styles.partnerCard}>
-              <Image
-                source={{ uri: assetUrl(p.logo) }}
-                style={styles.partnerLogo}
-                contentFit="contain"
-              />
-              <Text style={styles.partnerRole}>
-                {p.role} · {p.credential}
-              </Text>
-              <Text style={styles.partnerName}>{p.shortName}</Text>
-              <Text style={styles.partnerFull}>{p.name}</Text>
-              <Text style={styles.partnerHighlight}>{p.highlight}</Text>
-            </Reveal>
-          ))}
-        </Reveal>
-
-        <Reveal style={styles.section}>
-          <Text style={styles.greenEyebrow}>Pakistan network</Text>
-          <Text style={styles.h2}>Our distributors in Pakistan</Text>
-          <Text style={styles.sub}>
-            Authorized local partners for genuine TAEKMO modules — supply,
-            project support, and nationwide reach.
-          </Text>
-          {distributors.map((d, i) => (
-            <Reveal key={d.id} delay={i * 50}>
-              <DistributorCard
-                name={d.name}
-                shortName={d.shortName}
-                location={d.location}
-                role={d.role}
-                highlight={d.highlight}
-                logo={d.logo}
-                logoOnDark={d.logoOnDark}
-              />
-            </Reveal>
-          ))}
-        </Reveal>
-
         <Reveal style={styles.bottomBand}>
           <Image
             source={{ uri: assetUrl("/images/solutions/solutions-bg.jpg") }}
@@ -326,8 +341,8 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   hero: {
-    backgroundColor: "#04100a",
-    paddingBottom: 28,
+    backgroundColor: colors.white,
+    paddingBottom: 20,
     minHeight: 560,
   },
   heroDim: {
@@ -401,17 +416,21 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   statsSection: {
-    backgroundColor: colors.page,
+    backgroundColor: colors.white,
     paddingHorizontal: spacing.lg,
-    paddingVertical: 8,
+    paddingVertical: 24,
   },
   statRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: "rgba(0,0,0,0.06)",
+    gap: 14,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    backgroundColor: colors.page,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 16,
+    marginBottom: 10,
   },
   statIcon: {
     width: 44,
@@ -422,7 +441,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   statValue: {
-    color: "#04100a",
+    color: colors.ink,
     fontSize: 24,
     fontWeight: "800",
   },
@@ -434,6 +453,18 @@ const styles = StyleSheet.create({
   section: {
     paddingHorizontal: spacing.lg,
     paddingVertical: 28,
+  },
+  distributorRail: {
+    marginTop: -8,
+    paddingLeft: spacing.lg,
+    paddingBottom: 20,
+    backgroundColor: colors.page,
+  },
+  teamRail: {
+    marginTop: -8,
+    paddingLeft: spacing.lg,
+    paddingBottom: 20,
+    backgroundColor: colors.white,
   },
   sectionPad: {
     paddingHorizontal: spacing.lg,
@@ -603,24 +634,32 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   partnerCard: {
-    backgroundColor: colors.white,
-    borderRadius: 14,
+    backgroundColor: colors.page,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.border,
     padding: 16,
     marginBottom: 12,
   },
   partnerLogo: {
-    width: 120,
-    height: 44,
-    marginBottom: 12,
-    backgroundColor: "#f3f5f4",
-    borderRadius: 8,
+    width: "100%",
+    maxWidth: 180,
+    height: 52,
+    marginBottom: 4,
+    alignSelf: "flex-start",
+    backgroundColor: "transparent",
+  },
+  partnerDivider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: colors.border,
+    marginVertical: 12,
   },
   partnerRole: {
-    color: colors.muted,
+    color: colors.green,
     fontSize: 11,
-    fontWeight: "600",
+    fontWeight: "700",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   partnerName: {
     marginTop: 4,

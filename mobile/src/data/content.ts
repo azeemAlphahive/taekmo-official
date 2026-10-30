@@ -4,8 +4,8 @@ export const siteConfig = {
   description:
     "Official TAEKMO Solar website — high-efficiency N-type solar panels, Talesun TAEKMO modules, project solutions, and product authenticity verification for homes, businesses, and utility projects.",
   url: "https://taekmo-official.com",
-  email: "sales@taekmosolar.com",
-  phone: "+92 300 0000000",
+  email: "Nibrass.zaman@talesun.com",
+  phone: "+92 323 3336633",
   address:
     "No.1 Talesun Road, Shajiabang, Changshu, Suzhou, Jiangsu Province, China 215542",
 } as const;
@@ -248,23 +248,23 @@ export const partners = [
 
 export const distributors = [
   {
-    id: "mateensons",
-    name: "Mateen Sons Sourcing House",
-    shortName: "Mateen Sons",
-    location: "Pakistan",
+    id: "inb-solar",
+    name: "INB Solar Pakistan",
+    shortName: "INB Solar",
+    location: "Karachi",
     role: "Authorized distributor",
-    highlight: "Solar sourcing, import & wholesale",
-    logo: "/images/distributors/mateensons-logo.png",
-    logoOnDark: true,
+    highlight: "Importer · Wholesaler · Retailer · DHA Phase 7, Karachi",
+    logo: "/images/distributors/inb-solar-logo.png",
+    logoOnDark: false,
   },
   {
-    id: "taimoor-trading",
-    name: "Taimoor Trading Company",
-    shortName: "Taimoor Trading",
-    location: "Lahore",
+    id: "ey-enterprise",
+    name: "EY Enterprise",
+    shortName: "EY Enterprise",
+    location: "Karachi",
     role: "Authorized distributor",
-    highlight: "Module trading · Township, Lahore",
-    logo: "/images/distributors/taimoor-trading-logo.png",
+    highlight: "Solar EPC & BESS · DHA Phase II Ext, Karachi",
+    logo: "/images/distributors/ey-enterprise-logo.png",
     logoOnDark: true,
   },
   {
@@ -319,14 +319,31 @@ export const insights = [
   },
 ] as const;
 
-export const pakistanCountryHead = {
-  name: "Sophia",
-  title: "Country Head — Pakistan",
-  message:
-    "TAEKMO is committed to bringing bankable, high-efficiency N-type modules to Pakistan’s residential, C&I, and utility projects. Whether you are specifying a rooftop or a large-scale plant, our local team is here to support product selection, supply, and long-term partnership.",
-  email: "sophia@taekmosolar.com",
-  phone: "+92 300 0000000",
-} as const;
+export const salesLeadership = [
+  {
+    id: "nibrass-zaman",
+    name: "Nibrass Zaman",
+    title: "Country Head, Pakistan",
+    photo: "/images/team/nibrass-zaman.jpg",
+    message:
+      "Leads TAEKMO as Country Head, Pakistan — building distributor partnerships, project supply pipelines, and long-term channel growth for residential, C&I, and utility buyers.",
+    email: "Nibrass.zaman@talesun.com",
+    phone: "+92 323 3336633",
+  },
+  {
+    id: "sofia-li",
+    name: "Sofia.Li",
+    title: "Sales Director, Pakistan",
+    photo: "/images/team/sofia-li.jpg",
+    photoPosition: { top: "28%", left: "50%" },
+    message:
+      "Drives TAEKMO sales in Pakistan as Sales Director — partner onboarding, commercial support, and reliable follow-through from inquiry through delivery for Talesun / TAEKMO modules.",
+    email: "sofia.li@talesun.com",
+    phone: "+92 310 331 6666",
+  },
+] as const;
+
+export const pakistanCountryHead = salesLeadership[0];
 
 export const technologyPage = {
   hero: {

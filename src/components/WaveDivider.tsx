@@ -5,7 +5,7 @@ interface WaveDividerProps {
 export function WaveDivider({ color = "#f4f7f5" }: WaveDividerProps) {
   return (
     <div
-      className="pointer-events-none absolute -bottom-px left-0 z-10 h-14 w-full sm:h-16 md:h-[4.5rem]"
+      className="pointer-events-none absolute -bottom-px left-0 z-10 h-5 w-full sm:h-6 md:h-7"
       aria-hidden
     >
       <svg

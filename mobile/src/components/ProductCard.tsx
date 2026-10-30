@@ -51,7 +51,7 @@ export function ProductCard({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.page,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.border,

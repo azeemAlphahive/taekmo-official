@@ -2,7 +2,7 @@
   "expo": {
     "name": "TAEKMO Solar",
     "slug": "taekmo-solar",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "taekmo",
@@ -28,7 +28,8 @@
     "android": {
       "package": "com.taekmosolar.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
         "backgroundColor": "#101217"
       },
       "permissions": [

@@ -62,6 +62,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.6,
     },
+    {
+      url: `${base}/privacy`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
+      url: `${base}/terms`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
+      url: `${base}/disclaimer`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.35,
+    },
   ];
 
   const productRoutes: MetadataRoute.Sitemap = getAllProductSlugs().map(
